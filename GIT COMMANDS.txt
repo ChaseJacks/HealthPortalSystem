@@ -1,0 +1,15 @@
+to get the project run this in terminal cd to Desktop and run this
+git clone https://github.com/ChaseJacks/HealthPortalSystem
+
+
+
+to branch off to work on development run 
+git checkout -b pick-a-branch-name putcommitnameyourworkingoffof
+git pull origin main
+
+
+to add your changes cd to project directory on terminal and make sure your changes are in your branch
+git checkout your-branch-name
+git add .
+git commit -m "message that fully details what you changed"
+git push origin main 
