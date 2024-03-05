@@ -32,7 +32,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/patient-history" element={<PatientHistory />} />
+        
         <Route path="/patient-assessment" element={<PatientAssessmentForm />} />
       </Routes>
     </BrowserRouter>
