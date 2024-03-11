@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
-import LoginPage from './LoginPage.js';
+import SignUp from './sign-up/SignUp.js'
+import HomePage from './HomePage.js'
+import SignIn from './sign-in/SignIn.js';
+import LandingPage from './landing-page/LandingPage.js';
 
 // Import components
 let PatientAssessmentForm = require("./components/PatientAssessmentForm/PatientAssessmentForm.js");
@@ -33,7 +36,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/Signup" element={<SignUp />} />
+        <Route path="/landing" element={<LandingPage />} />
         <Route path="/PatientAssessmentForm" element={<PatientAssessmentForm />} />
       </Routes>
     </BrowserRouter>
