@@ -10,6 +10,7 @@
 // Dependences
 const express   = require('express');
 const cors      = require('cors');
+const fs        = require('fs');
 const path      = require('path');
 
 // Class Declaration
@@ -37,9 +38,14 @@ class Server {
         );
     }
 
-    // Bind controllers to routes
+    // Bind routers to the app
     routes() {
-        // TODO make dynamic with all keys of this.paths
+
+        // Dynamically read all routers and make the app use them
+
+        fs.readdirSync('./routes/').forEach((file) => {
+            this.app.use(path.parse(file).name, require(`../routes/${file}`));
+        });
 
         /*this.app.use(this.paths.auth, require("../routes/auth"));
         this.app.use(this.paths.homepage, require("../routes/homepage"));*/

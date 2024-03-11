@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PatientAssessmentForm from './PatientAssessmentForm';
-import PatientHistory from './PatientHistory'
 import './App.css';
 
-
+// Import components
+let PatientAssessmentForm = require("./components/PatientAssessmentForm/PatientAssessmentForm.js");
+let PatientHistory = require("./components/PatientHistory/PatientHistory.js");
 
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         
-        <Route path="/patient-assessment" element={<PatientAssessmentForm />} />
+        <Route path="/PatientAssessmentForm" element={<PatientAssessmentForm />} />
       </Routes>
     </BrowserRouter>
   );
