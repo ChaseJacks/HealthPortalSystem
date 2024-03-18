@@ -1,28 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as SurveyReact from 'survey-react'; // Import SurveyReact
-import * as Survey from 'survey-react'; // Import SurveyReact
+import * as Survey from 'survey-react';
 import 'survey-react/survey.css';
-
-// Import the JSON for the form
-const json = require('./PatientAssessmentForm.json');
+import json from './PatientAssessmentForm.json';
 
 function SurveyComponent() {
-const survey = new Survey.Model(json);
-survey.onComplete.add((sender, options) => {
+  const survey = new Survey.Model(json);
+
+  survey.onComplete.add((sender, options) => {
     console.log(JSON.stringify(sender.data, null, 3));
-});
-  
-return <Survey.Survey model={survey} />;
+  });
+
+  return (
+    <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ width: '80%' }}>
+        <Survey.Survey model={survey} />
+      </div>
+    </div>
+  );
 }
-  
+
 // Ensure the target container exists before rendering
 const targetContainer = document.getElementById("surveyElement");
 if (targetContainer) {
-const root = ReactDOM.createRoot(targetContainer);
-root.render(<SurveyComponent />);
+  try {
+    ReactDOM.render(<SurveyComponent />, targetContainer);
+  } catch (error) {
+    console.error("Error rendering survey:", error);
+  }
 } else {
-console.error("Target container '#surveyElement' not found in the DOM.");
+  console.error("Target container '#surveyElement' not found in the DOM.");
 }
-  
+
 export default SurveyComponent;

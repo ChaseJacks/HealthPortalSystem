@@ -5,10 +5,11 @@ import SignUp from './sign-up/SignUp.js'
 import HomePage from './HomePage.js'
 import SignIn from './sign-in/SignIn.js';
 import LandingPage from './landing-page/LandingPage.js';
+import PatientAssessmentForm from './components/PatientAssessmentForm/PatientAssessmentForm.js'
 
 // Import components
-let PatientAssessmentForm = require("./components/PatientAssessmentForm/PatientAssessmentForm.js");
-let PatientHistory = require("./components/PatientHistory/PatientHistory.js");
+//let PatientAssessmentForm = require("./components/PatientAssessmentForm/PatientAssessmentForm.js");
+
 
 
 function App() {
