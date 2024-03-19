@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -13,27 +14,11 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
 
-
-
-function AppAppBar({ mode, toggleColorMode }) {
-  const [open, setOpen] = React.useState(false);
+function ScheduleAppBar({ mode, toggleColorMode }) {
+  const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
-  };
-
-  const scrollToSection = (sectionId) => {
-    const sectionElement = document.getElementById(sectionId);
-    const offset = 128;
-    if (sectionElement) {
-      const targetScroll = sectionElement.offsetTop - offset;
-      sectionElement.scrollIntoView({ behavior: 'smooth' });
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth',
-      });
-      setOpen(false);
-    }
   };
 
   return (
@@ -79,34 +64,23 @@ function AppAppBar({ mode, toggleColorMode }) {
                 px: 0,
               }}
             >
-              
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <MenuItem
-                  onClick={() => scrollToSection('features')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
+                {/* Update the onClick handlers to navigate to different routes */}
+                <MenuItem component={Link} to="/PatientAssessmentForm" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Patient Assessment Form
                   </Typography>
                 </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('doctors')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
+                <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Doctors
                   </Typography>
                 </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('highlights')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
+                <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    Schedule Appointment
+                    Home
                   </Typography>
                 </MenuItem>
-               
-               
               </Box>
             </Box>
             <Box
@@ -117,8 +91,6 @@ function AppAppBar({ mode, toggleColorMode }) {
               }}
             >
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-              
-             
             </Box>
             <Box sx={{ display: { sm: '', md: 'none' } }}>
               <Button
@@ -149,19 +121,22 @@ function AppAppBar({ mode, toggleColorMode }) {
                   >
                     <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                   </Box>
-                  <MenuItem onClick={() => scrollToSection('features')}>
+                  {/* Update the onClick handlers to navigate to different routes */}
+                  <MenuItem component={Link} to="/features">
                     Features
                   </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('testimonials')}>
+                  <MenuItem component={Link} to="/testimonials">
                     Testimonials
                   </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('highlights')}>
+                  <MenuItem component={Link} to="/highlights">
                     Highlights
                   </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('pricing')}>
+                  <MenuItem component={Link} to="/pricing">
                     Pricing
                   </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('faq')}>FAQ</MenuItem>
+                  <MenuItem component={Link} to="/faq">
+                    FAQ
+                  </MenuItem>
                   <Divider />
                   <MenuItem>
                     <Button
@@ -197,9 +172,9 @@ function AppAppBar({ mode, toggleColorMode }) {
   );
 }
 
-AppAppBar.propTypes = {
+ScheduleAppBar.propTypes = {
   mode: PropTypes.oneOf(['dark', 'light']).isRequired,
   toggleColorMode: PropTypes.func.isRequired,
 };
 
-export default AppAppBar;
+export default ScheduleAppBar;

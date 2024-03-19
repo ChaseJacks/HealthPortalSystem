@@ -6,9 +6,9 @@ import HomePage from './HomePage.js'
 import SignIn from './sign-in/SignIn.js';
 import LandingPage from './landing-page/LandingPage.js';
 import PatientAssessmentForm from './components/PatientAssessmentForm/PatientAssessmentForm.js'
+import ScheduleAppointmentPage from './landing-page/components/ScheduleAppointment.js';
 
-// Import components
-//let PatientAssessmentForm = require("./components/PatientAssessmentForm/PatientAssessmentForm.js");
+
 
 
 
@@ -42,6 +42,7 @@ function App() {
         <Route path="/Signup" element={<SignUp />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/PatientAssessmentForm" element={<PatientAssessmentForm />} />
+        <Route path = "/ScheduleAppointment" element = {<ScheduleAppointmentPage />} />
       </Routes>
     </BrowserRouter>
   );
