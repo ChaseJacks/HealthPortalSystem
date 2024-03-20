@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -105,7 +106,11 @@ function AppAppBar({ mode, toggleColorMode }) {
                     Schedule Appointment
                   </Typography>
                 </MenuItem>
-               
+                <MenuItem component={Link} to="/Appointments" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    View Appointments
+                  </Typography>
+                </MenuItem>
                
               </Box>
             </Box>

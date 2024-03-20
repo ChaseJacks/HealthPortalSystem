@@ -64,9 +64,9 @@ const ScheduleAppointmentPage = () => {
                 max="18:00"
                 step="900" // 15-minute intervals
               />
-              <button onClick={handleSchedule}>Schedule Appointment</button>
             </div>
           )}
+          <button onClick={handleSchedule}>Schedule Appointment</button>
         </div>
       </Box>
     </ThemeProvider>

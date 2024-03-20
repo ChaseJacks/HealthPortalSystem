@@ -76,6 +76,11 @@ function ScheduleAppBar({ mode, toggleColorMode }) {
                     Doctors
                   </Typography>
                 </MenuItem>
+                <MenuItem component={Link} to="/Appointments" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    View Appointments
+                  </Typography>
+                </MenuItem>
                 <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Home

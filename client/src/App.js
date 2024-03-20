@@ -7,7 +7,7 @@ import SignIn from './sign-in/SignIn.js';
 import LandingPage from './landing-page/LandingPage.js';
 import PatientAssessmentForm from './components/PatientAssessmentForm/PatientAssessmentForm.js'
 import ScheduleAppointmentPage from './landing-page/components/ScheduleAppointment.js';
-
+import Appointments from './components/Appointments.js';
 
 
 
@@ -38,6 +38,7 @@ function App() {
     <BrowserRouter>
       <Routes>
       <Route path="/" element={<HomePage />} />
+        <Route path="/Appointments" element = {<Appointments/>} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/Signup" element={<SignUp />} />
         <Route path="/landing" element={<LandingPage />} />
