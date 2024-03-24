@@ -13,20 +13,34 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-
+import { login } from "../api/auth.js";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+  // Use client/src/api/auth.js to handle login
+  // @author Richard Williams
+  const handleSubmit = async (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+
+      const email = data.get('email');
+      const password = data.get('password');
+
+      const loginResult = await login({ email, password });
+
+      if (!loginResult)
+          console.log("bad login result")   // TODO handle the "Bad User/Password" stuff here!!!
+      else {
+          // TODO process the successful login. This is where we "absorb" the JSON response from the backend
+          const { name, email } = loginResult
+          console.log(name + " logged in! Email is " + email);
+          // If you need other info in the login result, let me know!
+          // I don't know how to implement moving to another web page in the front end from here. Figure it out pls
+      }
   };
 
   return (
