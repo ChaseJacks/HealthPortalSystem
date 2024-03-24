@@ -6,7 +6,9 @@ Marshall Uni CS-310 project.
 
 ### Running
 
-Once you're sure you've installed all of the packages, you need to build the application by running `npm run build`. 
+Once you're sure you've installed all of the packages, you can run the website.
+
+Each time you modify the front-end, you need to build the application by running `npm run build`. 
 This will create a `client/build` that the backend pulls from.
 You will need to do this each time there are changes to `client/src`.
 
