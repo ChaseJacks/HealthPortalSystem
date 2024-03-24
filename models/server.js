@@ -3,7 +3,7 @@
  * 
  * models/server.js - Dyanmically sets up routes, middleware, and controllers using a server class.
  * @author Richard Williams
- * @since 3/5/2024
+ * @since 3/23/2024
  * 
  */
 
@@ -19,10 +19,9 @@ class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
-        /*this.paths = {
-            auth: "api/auth",
-            homepage: "/api/homepage"
-        };*/
+        this.paths = {
+            auth: "/auth"
+        };
 
         this.middlewares();
         this.routes();
@@ -38,17 +37,16 @@ class Server {
         );
     }
 
-    // Bind routers to the app
+    // Bind back-end routers to the app
     routes() {
+        this.app.use(this.paths.auth, require("../routes/auth"));
 
-        // Dynamically read all routers and make the app use them
-
-        fs.readdirSync('./routes/').forEach((file) => {
-            this.app.use(path.parse(file).name, require(`../routes/${file}`));
+        // Catch all requests that don't match any route
+        this.app.get("*", (req, res) => {
+            res.sendFile(
+                path.join(__dirname, "../client/build/index.html")
+            );
         });
-
-        /*this.app.use(this.paths.auth, require("../routes/auth"));
-        this.app.use(this.paths.homepage, require("../routes/homepage"));*/
     }
 
     listen() {
