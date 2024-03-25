@@ -15,37 +15,30 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { login } from "../api/auth.js";
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-
-  // Use client/src/api/auth.js to handle login
-  // @author Richard Williams
   const handleSubmit = async (event) => {
-      event.preventDefault();
-      const data = new FormData(event.currentTarget);
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
 
-      const email = data.get('email');
-      const password = data.get('password');
+    const email = data.get('email');
+    const password = data.get('password');
 
-      const loginResult = await login({ email, password });
+    const loginResult = await login({ email, password });
 
-      if (!loginResult)
-          console.log("Add a 'bad username/password' notification of some kind!");
-      else {
+    if (!loginResult) {
+      console.log("Add a 'bad username/password' notification of some kind!");
+    } else {
+      const { userID, isAdmin, userTypeID } = loginResult;
+      console.log(userID + " logged in! Type=" + isAdmin + " userTypeID=" + userTypeID);
 
-          const { userID, isAdmin, userTypeID } = loginResult;
-          console.log(userID + " logged in! Type=" + isAdmin + " userTypeID=" + userTypeID);
-          
-
-          switch (isAdmin) {
-              case 0:
-                  // redirect to /landing here!!
-                  break;
-          }
+      if (isAdmin) {
+        window.location.href = '/DoctorLand';
+      } else {
+        window.location.href = '/landing';
       }
+    }
   };
 
   return (
@@ -113,7 +106,6 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        
       </Container>
     </ThemeProvider>
   );
