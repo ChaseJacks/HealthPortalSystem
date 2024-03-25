@@ -26,7 +26,8 @@ class Server {
             viewPatientAssessmentForm: "/viewPatientAssessmentForm",
             createPatientAssessmentForm: "/createPatientAssessmentForm",
             viewAppointments: "/viewAppointments",
-            createAppointment: "/createAppointment"
+            createAppointment: "/createAppointment",
+            createUser: "/createUser"
         };
 
         this.middlewares();
@@ -51,6 +52,7 @@ class Server {
         this.app.use(this.paths.createPatientAssessmentForm, require("../routes/createPatientAssessmentForm"));
         this.app.use(this.paths.viewAppointments, require("../routes/viewAppointments"));
         this.app.use(this.paths.createAppointment, require("../routes/createAppointment"));
+        this.app.use(this.paths.createUser, require("../routes/createUser"));
 
         // Catch all requests that don't match any route
         this.app.get("*", (req, res) => {
@@ -66,7 +68,7 @@ class Server {
 
             //testing
             //console.log(await query('SELECT ' + 'name, specialization' + ' FROM Doctor');)
-
+            //console.log(await query(`INSERT INTO Users VALUES (NEWID(), 'rich@rich.com', 'abcd',0)`));
         })
     }
 }
