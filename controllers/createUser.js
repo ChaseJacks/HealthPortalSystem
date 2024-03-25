@@ -31,7 +31,7 @@ const createUser = async (req, res = response) => {
     await query(`INSERT INTO Patient (PatientID, Name, UserID) VALUES (NEWID(), '${firstName + lastName}', '${userID}'`);
     const patientIDQuery = await query(`SELECT PatientID FROM Patient WHERE UserID='${ userID }'`);
     console.log(patientIDQuery)
-    patientID = patientIDQuery.recordset[0].PatientID;
+    const patientID = patientIDQuery.recordset[0].PatientID;
 
     // With a successful signup, send back {userID, isAdmin = 0, PatientID}
     res.json({
