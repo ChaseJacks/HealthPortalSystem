@@ -6,7 +6,7 @@
  * @author Richard Williams
  */
 
-export async function({ firstName, lastName, email, password }) {
+export async function createUser({ firstName, lastName, email, password }) {
     return await fetch("/createUser", {
         method: "POST",
         body: JSON.stringify({ firstName, lastName, email, password }),

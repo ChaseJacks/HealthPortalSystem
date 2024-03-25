@@ -12,7 +12,8 @@ const { query } = require("../db/dbService");
 const createUser = async (req, res = response) => {
     const { firstName, lastName, email, password } = req.body;
 
-    const existQuery = await query(`SELECT COUNT(*) AS count FROM User WHERE Username=${email}`);
+    const existQuery = await query(`SELECT COUNT(*) AS count FROM Users WHERE Username='${email}'`);
+    console.log(existQuery)
     let count = existQuery.recordset[0].count;
 
     // If the email exists, dont make the account
@@ -23,7 +24,7 @@ const createUser = async (req, res = response) => {
     }
 
     // Insert the new user
-    await query(`INSERT INTO Users VALUES (NEWID(), '${email}', '${password}',0)`));
+    await query(`INSERT INTO Users VALUES (NEWID(), '${email}', '${password}',0)`);
     const userID = await query(`SELECT UserID FROM Users WHERE Username == '${email}'`).recordset[0].UserID;
     await query(`INSERT INTO Patient (PatientID, Name, UserID) VALUES (NEWID(), '${firstName + lastName}', '${userID}'`);
     const patientID = await query(`SELECT PatientID FROM Patient WHERE UserID='${ userID }'`).recordset[0].PatientID;
