@@ -25,9 +25,13 @@ const createUser = async (req, res = response) => {
 
     // Insert the new user
     await query(`INSERT INTO Users VALUES (NEWID(), '${email}', '${password}',0)`);
-    const userID = await query(`SELECT UserID FROM Users WHERE Username == '${email}'`).recordset[0].UserID;
+    const userIDQuery = await query(`SELECT UserID FROM Users WHERE Username == '${email}'`);
+    console.log(userIDQuery)
+    const userID = userIDQuery.record[0].UserID;
     await query(`INSERT INTO Patient (PatientID, Name, UserID) VALUES (NEWID(), '${firstName + lastName}', '${userID}'`);
-    const patientID = await query(`SELECT PatientID FROM Patient WHERE UserID='${ userID }'`).recordset[0].PatientID;
+    const patientIDQuery = await query(`SELECT PatientID FROM Patient WHERE UserID='${ userID }'`);
+    console.log(patientIDQuery)
+    patientID = patientIDQuery.recordset[0].PatientID;
 
     // With a successful signup, send back {userID, isAdmin = 0, PatientID}
     res.json({
