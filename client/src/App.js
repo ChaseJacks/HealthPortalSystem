@@ -8,6 +8,7 @@ import LandingPage from './landing-page/LandingPage.js';
 import PatientAssessmentForm from './components/PatientAssessmentForm/PatientAssessmentForm.js'
 import ScheduleAppointmentPage from './landing-page/components/ScheduleAppointment.js';
 import Appointments from './components/Appointments.js';
+import DoctorLand from './DoctorLand/DoctorLand.js';
 
 
 
@@ -40,10 +41,12 @@ function App() {
       <Route path="/" element={<HomePage />} />
         <Route path="/Appointments" element = {<Appointments/>} />
         <Route path="/login" element={<SignIn />} />
-        <Route path="/Signup" element={<SignUp />} />
+        <Route path="/SignUp" element={<SignUp />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/PatientAssessmentForm" element={<PatientAssessmentForm />} />
         <Route path = "/ScheduleAppointment" element = {<ScheduleAppointmentPage />} />
+        <Route path="/DoctorLand" element={<DoctorLand />} />
+
       </Routes>
     </BrowserRouter>
   );

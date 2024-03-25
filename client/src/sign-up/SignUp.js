@@ -103,10 +103,7 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
+                
               </Grid>
             </Grid>
             <Button
@@ -126,7 +123,7 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        
       </Container>
     </ThemeProvider>
   );
