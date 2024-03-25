@@ -13,33 +13,28 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-
-
 import { createUser } from '../api/createUser';
-
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
 
-  // Attempts to create the profile
   const handleSubmit = async(event) => {
     event.preventDefault();
-      const data = new FormData(event.currentTarget);
-      const firstName = data.get('firstName');
-      const lastName = data.get('lastName');
-      const email = data.get('email');
-      const password = data.get('password');
+    const data = new FormData(event.currentTarget);
+    const firstName = data.get('firstName');
+    const lastName = data.get('lastName');
+    const email = data.get('email');
+    const password = data.get('password');
 
-      const signUpResult = await createUser({ firstName, lastName, email, password });
+    const signUpResult = await createUser({ firstName, lastName, email, password });
 
-      if (!signUpResult) {
-          console.log("Email already used! Show this on the screen!");
-      } else {
-          // Redirect to the new place
-          // Use SignIn.js as a basis on what to do
-      }
+    if (!signUpResult) {
+        console.log("Email already used! Show this on the screen!");
+    } else {
+        // Redirect to the landing page
+        window.location.href = '/landing';
+    }
   };
 
   return (
@@ -103,9 +98,6 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                 />
-              </Grid>
-              <Grid item xs={12}>
-                
               </Grid>
             </Grid>
             <Button
