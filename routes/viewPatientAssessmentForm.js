@@ -1,7 +1,6 @@
-
 /**
  * 
- * routes/auth.js - Contains the router for authorization. This endpoint is used for logging in and out
+ * routes/auth.js - Contains the router for authorization. This endpoint is used for viewing patient forms
  * 
  * 
  * 
@@ -11,7 +10,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const { viewDoctors } = require('../controllers/viewDoctors')
+const { viewPatientAssessmentForm } = require('../controllers/viewPatientAssessmentForm')
 const { validateInput } = require('../middleware/validateInput');
 
 //const { check } = require('express-validator');
@@ -24,9 +23,9 @@ const { validateInput } = require('../middleware/validateInput');
     validateInput
 ], login);*/
 
-router.post('/viewDoctors', [
+router.post('/viewPatientAssessmentForm', [
     validateInput
-], viewDoctors)
+], viewPatientAssessmentForm)
 
 
 module.exports = router;

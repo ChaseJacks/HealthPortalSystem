@@ -8,6 +8,7 @@
  */
 
 // Dependences
+const { query } = require("../db/dbService");
 const express   = require('express');
 const cors      = require('cors');
 const fs        = require('fs');
@@ -20,7 +21,12 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.paths = {
-            auth: "/auth"
+            auth: "/auth",
+            viewDoctors: "/viewDoctors",
+            viewPatientAssessmentForm: "/viewPatientAssessmentForm",
+            createPatientAssessmentForm: "/createPatientAssessmentForm",
+            viewAppointment: "/viewAppointment",
+            createAppointment: "/createAppointment"
         };
 
         this.middlewares();
@@ -40,6 +46,11 @@ class Server {
     // Bind back-end routers to the app
     routes() {
         this.app.use(this.paths.auth, require("../routes/auth"));
+        this.app.use(this.paths.auth, require("../routes/viewDoctors"));
+        this.app.use(this.paths.auth, require("../routes/viewPatientAssessmentForm"));
+        this.app.use(this.paths.auth, require("../routes/createPatientAssessmentForm"));
+        this.app.use(this.paths.auth, require("../routes/viewAppointments"));
+        this.app.use(this.paths.auth, require("../routes/createAppointment"));
 
         // Catch all requests that don't match any route
         this.app.get("*", (req, res) => {
@@ -50,8 +61,13 @@ class Server {
     }
 
     listen() {
-        this.app.listen(this.port, () => {
+        this.app.listen(this.port, async() => {
             console.log("Running on port ", this.port);
+
+            //testing
+            const result = await query('SELECT ' + 'name, specialization' + ' FROM Doctor');
+            console.log(result)
+
         })
     }
 }
