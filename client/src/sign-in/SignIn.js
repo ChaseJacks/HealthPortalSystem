@@ -33,13 +33,18 @@ export default function SignIn() {
       const loginResult = await login({ email, password });
 
       if (!loginResult)
-          console.log("bad login result")   // TODO handle the "Bad User/Password" stuff here!!!
+          console.log("Add a 'bad username/password' notification of some kind!");
       else {
-          // TODO process the successful login. This is where we "absorb" the JSON response from the backend
-          const { name, email } = loginResult
-          console.log(name + " logged in! Email is " + email);
-          // If you need other info in the login result, let me know!
-          // I don't know how to implement moving to another web page in the front end from here. Figure it out pls
+
+          const { userID, isAdmin, userTypeID } = loginResult;
+          console.log(userID + " logged in! Type=" + isAdmin + " userTypeID=" + userTypeID);
+          
+
+          switch (isAdmin) {
+              case 0:
+                  // redirect to /landing here!!
+                  break;
+          }
       }
   };
 
