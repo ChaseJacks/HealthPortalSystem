@@ -25,7 +25,7 @@ class Server {
             viewDoctors: "/viewDoctors",
             viewPatientAssessmentForm: "/viewPatientAssessmentForm",
             createPatientAssessmentForm: "/createPatientAssessmentForm",
-            viewAppointment: "/viewAppointment",
+            viewAppointments: "/viewAppointments",
             createAppointment: "/createAppointment"
         };
 
@@ -46,11 +46,11 @@ class Server {
     // Bind back-end routers to the app
     routes() {
         this.app.use(this.paths.auth, require("../routes/auth"));
-        this.app.use(this.paths.auth, require("../routes/viewDoctors"));
-        this.app.use(this.paths.auth, require("../routes/viewPatientAssessmentForm"));
-        this.app.use(this.paths.auth, require("../routes/createPatientAssessmentForm"));
-        this.app.use(this.paths.auth, require("../routes/viewAppointments"));
-        this.app.use(this.paths.auth, require("../routes/createAppointment"));
+        this.app.use(this.paths.viewDoctors, require("../routes/viewDoctors"));
+        this.app.use(this.paths.viewPatientAssessmentForm, require("../routes/viewPatientAssessmentForm"));
+        this.app.use(this.paths.createPatientAssessmentForm, require("../routes/createPatientAssessmentForm"));
+        this.app.use(this.paths.viewAppointments, require("../routes/viewAppointments"));
+        this.app.use(this.paths.createAppointment, require("../routes/createAppointment"));
 
         // Catch all requests that don't match any route
         this.app.get("*", (req, res) => {
@@ -65,8 +65,7 @@ class Server {
             console.log("Running on port ", this.port);
 
             //testing
-            const result = await query('SELECT ' + 'name, specialization' + ' FROM Doctor');
-            console.log(result)
+            //console.log(await query('SELECT ' + 'name, specialization' + ' FROM Doctor');)
 
         })
     }

@@ -7,23 +7,48 @@
  */
 
 const { response } = require("express");
+const { query } = require("../db/dbService");
 
 const login = async (req, res = response) => {
     const { email, password } = req.body;
 
-    // TODO implement a database search
+    // Get whether or not it's ood credentials
+    let result = await query("SELECT * FROM Users WHERE Username='" + email + "' AND Password='" + password + "'");
 
-    if (password !== "1234") {
-        return res.status(400).json({
+    if (!result.recordset[0]) {
+        return res.status(401).json({
             msg: "User / Password are incorrect",
         });
     }
 
+    // Extract data from the row to send back
+    // We send {userID, isAdmin, userTypeID}
+    let row = result.recordset[0];
+
+    const userID = row.UserID;
+    const isAdmin = row.isAdmin;
+
+    var userType;
+    switch (isAdmin) {
+        case 0:
+            userType = "Patient";
+            break;
+        case 1:
+            userType = "Doctor";
+            break;
+        default:
+            return res.status(404).json({
+                msg: "Bad Database Entry",
+            });
+    }
+
+    const userTypeIDQuery = await query(`SELECT ${userType}ID from ${userType} WHERE UserID='${userID}'`);
+    let userTypeID = userTypeIDQuery.recordset[0][`${userType}ID`];
+    
     res.json({
-        name: "TestUser",
-        email: email,
-        token: "Do we want to use a token in the local storage to keep them logged in? Use cookies for it perhaps?",
-        msg: "Successful login",
+        userID: userID,
+        isAdmin: isAdmin,
+        userTypeID: userTypeID
     });
 };
 
