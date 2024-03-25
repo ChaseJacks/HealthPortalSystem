@@ -26,18 +26,31 @@ function Copyright(props) {
   );
 }
 
+import { createUser } from '../api/createUser';
+
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+
+  // Attempts to create the profile
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+      const data = new FormData(event.currentTarget);
+      const firstName = data.get('firstName');
+      const lastName = data.get('lastName');
+      const email = data.get('email');
+      const password = data.get('password');
+
+      const signUpResult = await createUser({ firstName, lastName, email, password });
+
+      if (!signUpResult) {
+          console.log("Email already used! Show this on the screen!");
+      } else {
+          // Redirect to the new place
+          // Use SignIn.js as a basis on what to do
+      }
   };
 
   return (
