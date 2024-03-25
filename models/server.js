@@ -66,7 +66,7 @@ class Server {
 
             //testing
             //console.log(await query('SELECT ' + 'name, specialization' + ' FROM Doctor');)
-
+            //console.log(await query(`INSERT INTO Users VALUES (NEWID(), 'rich@rich.com', 'abcd',0)`));
         })
     }
 }
