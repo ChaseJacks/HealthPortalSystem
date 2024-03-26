@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './login.css'
+import './login.css';
+
 
 class HomePage extends React.Component {
   render() {
     return (
-      <div className='wrapper'>
+      <div className='background-container'>
+      <div className='wrapper' >
         <h1>Welcome to the Patient Portal!</h1>
         <p className='printed-line'>Please sign in or sign up.</p>
         <div>
@@ -17,9 +19,9 @@ class HomePage extends React.Component {
           </Link>
         </div>
       </div>
+      </div>
     );
   }
 }
 
 export default HomePage;
-
