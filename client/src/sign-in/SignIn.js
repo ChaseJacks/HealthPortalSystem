@@ -33,9 +33,9 @@ export default function SignIn() {
       const { userID, isAdmin, userTypeID } = loginResult;
       console.log(userID + " logged in! Type=" + isAdmin + " userTypeID=" + userTypeID);
 
-        localStorage.add("userID", userID);
-        localStorage.add("isAdmin", isAdmin);
-        localStorage.add("userTypeID", userTypeID);
+      localStorage.setItem("userID", userID);
+      localStorage.setItem("isAdmin", isAdmin);
+      localStorage.setItem("userTypeID", userTypeID);
 
       if (isAdmin == 1) {
         window.location.href = '/DoctorLand';

@@ -4,13 +4,14 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import ScheduleAppBar from '../landing-page/components/ScheduleAppBar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import getLPTheme from '../landing-page/getLPTheme';
 
-import { viewAppointments } from '../../api/viewAppointments';
-
+import { viewAppointments } from './../api/viewAppointments';
 
 const Appointments = () => {
   const [mode, setMode] = useState('dark');
@@ -29,23 +30,32 @@ const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-      const fetchAppointments = async () => {
-          try {
-              const response = await viewAppointments(localStorage.getItem("userTypeID"));
-
-              if (!response.ok)
-                  throw new Error("Error retrieving appointments");
-
-              const data = response.recordset;
-              setAppointments(data);
-          } catch (err) {
-              console.error("Error retrieveing appointments", error.message);
-          }
-      };
-
+    const fetchAppointments = async () => {
+      try {
+        const response = await viewAppointments(localStorage.getItem("userTypeID"));
+        console.log("Response:", response); // Log the response object
+  
+        // Check if response data is empty or undefined
+        if (!response || response.length === 0) {
+          throw new Error("Failed to fetch appointments: Response data is empty");
+        }
+  
+        const data = response.map(appointment => ({
+          doctorName: appointment.DoctorName,
+          location: appointment.Location,
+          date: new Date(appointment.Date).toLocaleDateString(),
+          time: new Date(appointment.Date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }), // Format time (e.g., 9:00 AM)
+        }));
+  
+        setAppointments(data);
+      } catch (err) {
+        console.error("Error retrieving appointments:", err.message);
+      }
+    };
+  
     fetchAppointments();
   }, []);
-
+  
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
@@ -60,16 +70,23 @@ const Appointments = () => {
               You have no appointments scheduled.
             </Typography>
           ) : (
-            <ul>
-              {appointments.map((appointment) => (
-                <li key={appointment.id}>
-                  {/* Render appointment details */}
-                  <Typography variant="body1">
-                    Date: {appointment.date}, Time: {appointment.time}
-                  </Typography>
-                </li>
+            <Box display="flex" flexDirection="column" alignItems="flex-start">
+              {appointments.map((appointment, index) => (
+                <Card key={index} variant="outlined" style={{ marginBottom: '10px' }}>
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      Appointment with {appointment.doctorName}
+                    </Typography>
+                    <Typography variant="body1">
+                      Location: {appointment.location}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Date: {appointment.date}, Time: {appointment.time}
+                    </Typography>
+                  </CardContent>
+                </Card>
               ))}
-            </ul>
+            </Box>
           )}
           <Box mt={2}>
             <Button component={Link} to="/ScheduleAppointment" variant="contained" color="primary" sx={{ color: 'white' }}>

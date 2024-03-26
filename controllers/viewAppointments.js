@@ -1,23 +1,38 @@
 const { response } = require("express");
 const { query } = require("../db/dbService");
+const sql = require("mssql");
 
 const viewAppointments = async (req, res = response) => {
-    const { column } = req.body
-    column = column.toUppercase();
+    try {
+        const { patientID } = req.body;
+        
 
-    let result = await query('SELECT * FROM Appointment WHERE PatientID =' + column + ';');
+        const request = new sql.Request();
+        request.input('patientID', sql.NVarChar, patientID);
 
-    for (let i = 0; i < result.recordset; i++) {
-        let doctorID = result.recordset[i].DoctorID;
-        // Get the name of the doctor
-        let docQuery = await query('SELECT Name FROM Doctor WHERE DoctorID =' + doctorID);
-        let docName = docQuery.recordset[0].Name;
-        result.recordset[i].DoctorID = docName;
+        const result = await request.query('SELECT * FROM Appointment WHERE PatientID = @patientID');
+        
+
+        const finalResp = [];
+
+        for (let i = 0; i < result.recordset.length; i++) {
+            const doctorID = result.recordset[i].DoctorID;
+            console.log(doctorID)
+
+            const docRequest = new sql.Request();
+            docRequest.input('doctorID', sql.NVarChar, doctorID);
+            const docQuery = await docRequest.query('SELECT Name FROM Doctor WHERE DoctorID = @doctorID');
+            console.log(docQuery)
+
+            const docName = docQuery.recordset[0].Name;
+            finalResp[i] = { DoctorName: docName, Location: result.recordset[i].Location, Date: result.recordset[i].Date };
+        }
+
+        res.json(finalResp);
+    } catch (error) {
+        console.error("Error:", error.message);
+        res.status(500).json({ error: "An error occurred while processing the request." });
     }
-
-    res.json(result);
-
-    // res.json(result);
 };
 
 module.exports = {
