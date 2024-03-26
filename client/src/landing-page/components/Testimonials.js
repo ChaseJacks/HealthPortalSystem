@@ -8,14 +8,13 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/system';
+import { viewDoctors } from '../../api/viewDoctors'; // Import your API function
 
-const { viewDoctors } = require('../../../api/viewDoctors');
 
-
-const fetchDoctorData = async () => {
+  const fetchDoctorData = async () => {
     try {
-        const doctorResponse = await viewDoctors({ "Name, Specialization"});
-
+        const doctorResponse = await viewDoctors("Name, Specialization");
+        
         if (!doctorResponse) {
             console.log("Error getting doctor list from database");
             return [];
@@ -30,13 +29,13 @@ const fetchDoctorData = async () => {
     }
 };
 
+
 export default function Doctors() {
   const theme = useTheme();
-  
+
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
-    // Fetch doctor data when component mounts
     const fetchData = async () => {
       const data = await fetchDoctorData();
       setDoctors(data);
@@ -84,7 +83,7 @@ export default function Doctors() {
             >
               <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                  {doctor.specialization}
+                  {doctor.Specialization}
                 </Typography>
               </CardContent>
               <Box
@@ -96,11 +95,9 @@ export default function Doctors() {
                 }}
               >
                 <CardHeader
-                  avatar={<Avatar>{doctor.initials}</Avatar>}
-                  title={`${doctor.firstName} ${doctor.lastName}`}
-                  subheader={doctor.occupation}
+                  avatar={<Avatar>{doctor.Name[0]}</Avatar>}
+                  title={doctor.Name}
                 />
-                
               </Box>
             </Card>
           </Grid>

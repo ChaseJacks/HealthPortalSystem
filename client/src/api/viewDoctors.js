@@ -1,4 +1,3 @@
-
 /**
  * 
  * client/src/api/viewDoctors.js - The HTTP request that is needed to use the viewDoctors endpoint
@@ -6,8 +5,8 @@
  * @author Richard Williams
  */
 
-export async function viewDoctors({ column }) {
-    return await fetch("/createUser", {
+export async function viewDoctors(column) {
+    return await fetch("/viewDoctors", {
         method: "POST",
         body: JSON.stringify({ column }),
         headers: { "Content-Type": "application/json" },

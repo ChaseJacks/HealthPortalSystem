@@ -11,9 +11,11 @@ const { query } = require("../db/dbService");
 
 const viewDoctors = async (req, res = response) => {
     const { column } = req.body
-    column = column.toUppercase();
+    
 
     const result = await query('SELECT ' + column + ' FROM Doctor');
+
+   
 
     res.json(result);
 
