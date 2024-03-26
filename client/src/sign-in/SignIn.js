@@ -33,7 +33,11 @@ export default function SignIn() {
       const { userID, isAdmin, userTypeID } = loginResult;
       console.log(userID + " logged in! Type=" + isAdmin + " userTypeID=" + userTypeID);
 
-      if (isAdmin) {
+        localStorage.add("userID", userID);
+        localStorage.add("isAdmin", isAdmin);
+        localStorage.add("userTypeID", userTypeID);
+
+      if (isAdmin == 1) {
         window.location.href = '/DoctorLand';
       } else {
         window.location.href = '/landing';

@@ -9,6 +9,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import getLPTheme from '../landing-page/getLPTheme';
 
+import { viewAppointments } from '../../api/viewAppointments';
+
+
 const Appointments = () => {
   const [mode, setMode] = useState('dark');
   const [showCustomTheme, setShowCustomTheme] = useState(true);
@@ -26,20 +29,19 @@ const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    // Fetch appointments data from the database
-    const fetchAppointments = async () => {
-      try {
-        // Make API call to fetch appointments data
-        const response = await fetch('api/appointments'); // Adjust the API endpoint accordingly
-        if (!response.ok) {
-          throw new Error('Failed to fetch appointments');
-        }
-        const data = await response.json();
-        setAppointments(data);
-      } catch (error) {
-        console.error('Error fetching appointments:', error.message);
-      }
-    };
+      const fetchAppointments = async () => {
+          try {
+              const response = await viewAppointments(localStorage.getItem("userTypeID"));
+
+              if (!response.ok)
+                  throw new Error("Error retrieving appointments");
+
+              const data = response.recordset;
+              setAppointments(data);
+          } catch (err) {
+              console.error("Error retrieveing appointments", error.message);
+          }
+      };
 
     fetchAppointments();
   }, []);
