@@ -17,12 +17,12 @@ const viewAppointments = async (req, res = response) => {
 
         for (let i = 0; i < result.recordset.length; i++) {
             const doctorID = result.recordset[i].DoctorID;
-            console.log(doctorID)
+            
 
             const docRequest = new sql.Request();
             docRequest.input('doctorID', sql.NVarChar, doctorID);
             const docQuery = await docRequest.query('SELECT Name FROM Doctor WHERE DoctorID = @doctorID');
-            console.log(docQuery)
+            
 
             const docName = docQuery.recordset[0].Name;
             finalResp[i] = { DoctorName: docName, Location: result.recordset[i].Location, Date: result.recordset[i].Date };
