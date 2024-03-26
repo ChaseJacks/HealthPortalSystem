@@ -9,22 +9,25 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/system';
 
+const { viewDoctors } = require('../../../api/viewDoctors');
 
 
-// Assuming you have an endpoint to fetch doctor data
 const fetchDoctorData = async () => {
-  try {
-    // Fetch doctor data from your Azure database
-    const response = await fetch('your_endpoint_here');
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
+    try {
+        const doctorResponse = await viewDoctors({ "Name, Specialization"});
+
+        if (!doctorResponse) {
+            console.log("Error getting doctor list from database");
+            return [];
+        }
+
+        const doctorList = doctorResponse.recordset;
+        return doctorList;
+
+    } catch (err) {
+        console.error(err);
+        return [];
     }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
 };
 
 export default function Doctors() {
