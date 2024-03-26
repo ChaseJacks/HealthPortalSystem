@@ -1,15 +1,15 @@
 
 /**
  * 
- * client/src/api/createUser.js - Makes the HTTP request to the backend to create the user
+ * client/src/api/viewDoctors.js - The HTTP request that is needed to use the viewDoctors endpoint
  * 
  * @author Richard Williams
  */
 
-export async function createUser({ firstName, lastName, email, password }) {
+export async function viewDoctors({ column }) {
     return await fetch("/createUser", {
         method: "POST",
-        body: JSON.stringify({ firstName, lastName, email, password }),
+        body: JSON.stringify({ column }),
         headers: { "Content-Type": "application/json" },
     })
         .then((response) => {
