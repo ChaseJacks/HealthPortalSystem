@@ -111,6 +111,11 @@ function AppAppBar({ mode, toggleColorMode }) {
                     View Appointments
                   </Typography>
                 </MenuItem>
+                <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}>//IT WONT LET ME COMMENT BUT HERE'S THE LOGOUT
+                  <Typography variant="body2" color="text.primary">
+                    Logout
+                  </Typography>
+                </MenuItem>
                
               </Box>
             </Box>
