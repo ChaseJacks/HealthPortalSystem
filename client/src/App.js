@@ -9,7 +9,7 @@ import PatientAssessmentForm from './components/PatientAssessmentForm/PatientAss
 import ScheduleAppointmentPage from './landing-page/components/ScheduleAppointment.js';
 import Appointments from './components/Appointments.js';
 import DoctorLand from './DoctorLand/DoctorLand.js';
-
+import PatientAssessmentView from './PatientAssessmentView/PatientAssessmentView.js';
 
 
 
@@ -46,6 +46,7 @@ function App() {
         <Route path="/PatientAssessmentForm" element={<PatientAssessmentForm />} />
         <Route path = "/ScheduleAppointment" element = {<ScheduleAppointmentPage />} />
         <Route path="/DoctorLand" element={<DoctorLand />} />
+        <Route path = "/ViewPatientAssessment" element={ <PatientAssessmentView /> } />
 
       </Routes>
     </BrowserRouter>

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import * as Survey from 'survey-react';
 import 'survey-react/survey.css';
 import json from './PatientAssessmentForm.json';
+import PAFormBar from './PAFormBar';
 
 function SurveyComponent() {
   const survey = new Survey.Model(json);
@@ -14,6 +15,7 @@ function SurveyComponent() {
   return (
     <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div style={{ width: '80%' }}>
+        <PAFormBar />
         <Survey.Survey model={survey} />
       </div>
     </div>
