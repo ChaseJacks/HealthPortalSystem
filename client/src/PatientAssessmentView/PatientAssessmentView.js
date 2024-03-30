@@ -7,8 +7,9 @@ import Divider from '@mui/material/Divider';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import getLPTheme from '../landing-page/getLPTheme';
-//import PatientHistory from '../components/PatientHistory';
 import Appointments from '../components/Appointments';
+import DocAppBar from '../DoctorLand/DocAppBar';
+import PatientList from './PatientList';
 
 
 
@@ -29,9 +30,9 @@ export default function PatientAssessmentView() {
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
-
+      <DocAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Box sx={{ bgcolor: 'background.default' }}>
-      <Appointments />
+      <PatientList />
       </Box>
       
     </ThemeProvider>
