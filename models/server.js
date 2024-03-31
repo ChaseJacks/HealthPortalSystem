@@ -22,12 +22,8 @@ class Server {
         this.port = process.env.PORT;
         this.paths = {
             auth: "/auth",
-            viewDoctors: "/viewDoctors",
-            viewPatientAssessmentForm: "/viewPatientAssessmentForm",
-            createPatientAssessmentForm: "/createPatientAssessmentForm",
-            viewAppointments: "/viewAppointments",
-            createAppointment: "/createAppointment",
-            createUser: "/createUser"
+            create: "/create",
+            data: "/data"
         };
 
         this.middlewares();
@@ -46,13 +42,9 @@ class Server {
 
     // Bind back-end routers to the app
     routes() {
-        this.app.use(this.paths.auth, require("../routes/auth"));
-        this.app.use(this.paths.viewDoctors, require("../routes/viewDoctors"));
-        this.app.use(this.paths.viewPatientAssessmentForm, require("../routes/viewPatientAssessmentForm"));
-        this.app.use(this.paths.createPatientAssessmentForm, require("../routes/createPatientAssessmentForm"));
-        this.app.use(this.paths.viewAppointments, require("../routes/viewAppointments"));
-        this.app.use(this.paths.createAppointment, require("../routes/createAppointment"));
-        this.app.use(this.paths.createUser, require("../routes/createUser"));
+        this.app.use(this.paths.auth,       require("../routes/auth"));
+        this.app.use(this.paths.create,     require("../routes/create"));
+        this.app.use(this.paths.data,       require("../routes/data"));
 
         // Catch all requests that don't match any route
         this.app.get("*", (req, res) => {

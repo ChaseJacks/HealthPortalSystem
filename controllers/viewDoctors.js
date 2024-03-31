@@ -1,25 +1,23 @@
 
 /**
  * 
- * controllers/auth.js - Contains all logic for logging in
+ * controllers/viewDoctors.js - Contains logic for viewing a list of all doctors
  * 
  * @author Richard Williams
+ * 
  */
 
 const { response } = require("express");
 const { query } = require("../db/dbService");
 
 const viewDoctors = async (req, res = response) => {
-    const { column } = req.body
-    
-
-    const result = await query('SELECT ' + column + ' FROM Doctor');
-
-   
-
-    res.json(result);
-
-    // res.json(result);
+    try {
+        const result = await query("SELECT * FROM Doctor");
+        res.json(result);
+    } catch (err) {
+        console.log("Error - " + err.message);
+        res.status(500).json({ msg: "Error retrieving data." });
+    }
 };
 
 module.exports = {

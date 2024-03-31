@@ -1,24 +1,32 @@
 
 /**
  * 
- * routes/auth.js - Contains the router for authorization. This endpoint is used for logging in and out
+ * routes/auth.js - Contains the router for the /auth path. Meant for logging in users.
  * 
- * 
+ * @author Richard Williams
  * 
  */
 
-
+// Setup router
 const { Router } = require('express');
 const router = Router();
 
+// ---------- Middleware
+
 const { check } = require('express-validator');
 const { validateInput } = require('../middleware/validateInput');
-const { login } = require('../controllers/auth');
 
+// ---------- Routes
+
+// login
+
+const { login } = require('../controllers/auth');
 router.post('/login', [
     check('email', 'Email is required').isEmail(),
     check('password', 'Password is required').not().isEmpty(),
     validateInput
 ], login);
+
+// Export 
 
 module.exports = router;

@@ -1,17 +1,34 @@
+
+/**
+ * 
+ * controllers/createAppointment.js - Handles the logic for creating a new appointment from an HTTP request
+ * 
+ * @author Richard Williams
+ * 
+ */
+
 const { response } = require("express");
 const { query } = require("../db/dbService");
 
 const createAppointment = async (req, res = response) => {
-    const { column1, column2, column3, column4, column5 } = req.body
-    //column1 = column1.toUppercase();
+    
+    const { patientID, doctorID, date, location } = req.body;
 
-    let column  = column1 + ',' + column2 + ',' + column3 + ',' + column4 + ',' + column5
+    // Try to make the query. If there's an issue, respond with a bad request
+    try {
+        await query(`INSERT INTO APPOINTMENT (AppointmentID, PatientID, DoctorID, Date, Location) VALUES
+            (NEWID(), ${patientID}, ${doctorID}, ${date}, "${location}"`);
+    } catch (err) {
+        res.status(401).json({
+            msg: "Bad query!";
+        });
+    }
 
-    const result = await query('INSERT INTO Appointment VALUES (' + column + ');');
+    // Otherwise, let them know it was successful
+    res.json({
+        msg: "Created appointment successfully."
+    });
 
-    res.json(result);
-
-    // res.json(result);
 };
 
 module.exports = {
