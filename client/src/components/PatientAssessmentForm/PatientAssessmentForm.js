@@ -9,6 +9,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import getLPTheme from '../../landing-page/getLPTheme';
 import CssBaseline from '@mui/material/CssBaseline';
 
+import { createAssessmentForm } from '../../api/createAssessmentForm';
+
 function SurveyComponent() {
   const [mode, setMode] = React.useState('dark');
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
@@ -24,9 +26,21 @@ function SurveyComponent() {
   };
   const survey = new Survey.Model(json);
 
-  survey.onComplete.add((sender, options) => {
+  survey.onComplete.add(async (sender, options) => {
     console.log(JSON.stringify(sender.data, null, 3));
-    //RICHARD HELP PLS
+    
+      // @author Richard Williams
+      const patientID = localStorage.getItem("userTypeID");
+      const patientName = localStorage.getItem("name");
+      const patientResponse = JSON.stringify(sender.data);
+
+      try {
+          const result = await createAssessmentForm(patientID, patientName, patientResponse);
+          console.log(result.msg);
+      } catch (err) {
+          console.log("Error submitting form! " + err.message);
+      }
+      // ------------------------
   });
 
   return (

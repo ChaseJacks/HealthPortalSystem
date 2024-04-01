@@ -4,7 +4,28 @@ import './login.css';
 
 
 class HomePage extends React.Component {
-  render() {
+    render() {
+
+        // @author Richard Williams
+        // Check if isAdmin is in local storage. This means they've been logged in. redirect to the right landing page
+        if (localStorage.getItem("isAdmin")) {
+            switch (localStorage.getItem("isAdmin")) {
+                case 0:
+                    window.location.href = "/landing";
+                    break;
+                case 1:
+                    window.location.href = "/DoctorLand";
+                    break;
+                default:
+                    console.log("Undefined user type. Removed important localStorage data");
+                    localStorage.removeItem("isAdmin");
+                    localStorage.removeItem("userID");
+                    localStorage.removeItem("userTypeID");
+                    localStorage.removeItem("name");
+            }
+        }
+        // ---------------------------------------
+
     return (
       <div className='background-container'>
       <div className='wrapper' >

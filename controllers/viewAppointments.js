@@ -56,7 +56,7 @@ const viewAppointmentsDoctor = async (req, res = response) => {
             const patientQuery = await docRequest.query("SELECT Name FROM Patient WHERE PatientID = @patientID");
             const patientName = patientQuery.recordset[0].Name;
 
-            finalResp[i] = { PatientName: patientName, Location: result.recordset[i].Location, Date: result.recordset[i].Date };
+            finalResp[i] = { PatientID: patientID, PatientName: patientName, Location: result.recordset[i].Location, Date: result.recordset[i].Date };
         }
 
         res.json(finalResp);
