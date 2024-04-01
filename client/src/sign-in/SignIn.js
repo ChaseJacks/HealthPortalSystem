@@ -30,12 +30,13 @@ export default function SignIn() {
     if (!loginResult) {
       console.log("Add a 'bad username/password' notification of some kind!");
     } else {
-      const { userID, isAdmin, userTypeID } = loginResult;
-      console.log(userID + " logged in! Type=" + isAdmin + " userTypeID=" + userTypeID);
+      const { userID, isAdmin, userTypeID, name } = loginResult;
+      //console.log(userID + " logged in! Type=" + isAdmin + " userTypeID=" + userTypeID);
 
       localStorage.setItem("userID", userID);
       localStorage.setItem("isAdmin", isAdmin);
       localStorage.setItem("userTypeID", userTypeID);
+      localStorage.setItem("name", name);
 
       if (isAdmin == 1) {
         window.location.href = '/DoctorLand';

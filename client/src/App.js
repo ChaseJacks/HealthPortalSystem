@@ -46,7 +46,7 @@ function App() {
         <Route path="/PatientAssessmentForm" element={<PatientAssessmentForm />} />
         <Route path = "/ScheduleAppointment" element = {<ScheduleAppointmentPage />} />
         <Route path="/DoctorLand" element={<DoctorLand />} />
-        <Route path = "/ViewPatientAssessment" element={ <PatientAssessmentView /> } />
+        <Route path = "/ViewPatientAssessments" element={ <PatientAssessmentView /> } />
 
       </Routes>
     </BrowserRouter>

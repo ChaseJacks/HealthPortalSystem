@@ -42,13 +42,15 @@ const login = async (req, res = response) => {
             });
     }
 
-    const userTypeIDQuery = await query(`SELECT ${userType}ID from ${userType} WHERE UserID='${userID}'`);
+    const userTypeIDQuery = await query(`SELECT ${userType}ID, Name from ${userType} WHERE UserID='${userID}'`);
     let userTypeID = userTypeIDQuery.recordset[0][`${userType}ID`];
+    let name = userTypeIDQuery.recordset[0][`Name`];
     
     res.json({
         userID: userID,
         isAdmin: isAdmin,
-        userTypeID: userTypeID
+        userTypeID: userTypeID,
+        name: name
     });
 };
 

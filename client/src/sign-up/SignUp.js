@@ -32,7 +32,14 @@ export default function SignUp() {
     if (!signUpResult) {
         console.log("Email already used! Show this on the screen!");
     } else {
-        // Redirect to the landing page
+        // Redirect to the landing page, after filling in the localStorage
+        const { userID, isAdmin, userTypeID, name } = signUpResult;
+
+        localStorage.setItem("userID", userID);
+        localStorage.setItem("isAdmin", isAdmin);
+        localStorage.setItem("userTypeID", userTypeID);
+        localStorage.setItem("name", name);
+
         window.location.href = '/landing';
     }
   };

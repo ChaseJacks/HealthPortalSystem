@@ -12,7 +12,7 @@ const { query } = require("../db/dbService");
 
 const viewDoctors = async (req, res = response) => {
     try {
-        const result = await query("SELECT * FROM Doctor");
+        const result = await query("SELECT Name, Specialization FROM Doctor");
         res.json(result);
     } catch (err) {
         console.log("Error - " + err.message);

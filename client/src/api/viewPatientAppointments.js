@@ -1,15 +1,13 @@
-
 /**
  * 
- * client/src/api/createUser.js - Makes the HTTP request to the backend to create the user
+ * client/src/api/viewPatientAppointments.js - The HTTP request that is needed to view patient appointments
  * 
  * @author Richard Williams
  */
 
-export async function createUser({ firstName, lastName, email, password }) {
-    return await fetch("/create/newUser", {
-        method: "POST",
-        body: JSON.stringify({ firstName, lastName, email, password }),
+export async function viewAppointments(patientID) {
+    return await fetch(`/data/patient/${patientID}/appointments`, {
+        method: "GET",
         headers: { "Content-Type": "application/json" },
     })
         .then((response) => {

@@ -21,7 +21,16 @@ function AppAppBar({ mode, toggleColorMode }) {
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
-  };
+    };
+
+    const logoutUser = () => {
+        localStorage.removeItem("userID");
+        localStorage.removeItem("isAdmin");
+        localStorage.removeItem("userTypeID");
+        localStorage.removeItem("name");
+
+        window.location.href = "/";
+    }
 
   const scrollToSection = (sectionId) => {
     const sectionElement = document.getElementById(sectionId);
@@ -111,7 +120,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                     View Appointments
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}>//IT WONT LET ME COMMENT BUT HERE'S THE LOGOUT
+                <MenuItem onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Logout
                   </Typography>

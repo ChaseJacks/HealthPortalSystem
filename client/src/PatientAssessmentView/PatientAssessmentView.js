@@ -11,6 +11,8 @@ import Appointments from '../components/Appointments';
 import DocAppBar from '../DoctorLand/DocAppBar';
 import PatientList from './PatientList';
 
+import { viewAssessmentForm } from './../api/viewAssessmentForm';
+
 
 
 export default function PatientAssessmentView() {

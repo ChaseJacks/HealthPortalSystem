@@ -13,7 +13,7 @@ import { viewDoctors } from '../../api/viewDoctors'; // Import your API function
 
   const fetchDoctorData = async () => {
     try {
-        const doctorResponse = await viewDoctors("Name, Specialization");
+        const doctorResponse = await viewDoctors();
         
         if (!doctorResponse) {
             console.log("Error getting doctor list from database");

@@ -11,7 +11,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import getLPTheme from '../landing-page/getLPTheme';
 
-import { viewAppointments } from './../api/viewAppointments';
+import { viewAppointments } from './../api/viewPatientAppointments';
 
 const Appointments = () => {
   const [mode, setMode] = useState('dark');

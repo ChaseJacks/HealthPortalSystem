@@ -5,10 +5,9 @@
  * @author Richard Williams
  */
 
-export async function viewDoctors(column) {
-    return await fetch("/viewDoctors", {
-        method: "POST",
-        body: JSON.stringify({ column }),
+export async function viewDoctors() {
+    return await fetch("/data/viewDoctors", {
+        method: "GET",
         headers: { "Content-Type": "application/json" },
     })
         .then((response) => {

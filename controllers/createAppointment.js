@@ -20,7 +20,7 @@ const createAppointment = async (req, res = response) => {
             (NEWID(), ${patientID}, ${doctorID}, ${date}, "${location}"`);
     } catch (err) {
         res.status(401).json({
-            msg: "Bad query!";
+            msg: "Bad query!"
         });
     }
 

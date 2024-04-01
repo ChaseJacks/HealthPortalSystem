@@ -11,6 +11,7 @@ const { query } = require("../db/dbService");
 
 const createUser = async (req, res = response) => {
     const { firstName, lastName, email, password } = req.body;
+    const name = firstName + " " + lastName
 
     const existQuery = await query(`SELECT COUNT(*) AS count FROM Users WHERE Username='${email}'`);
     console.log(existQuery)
@@ -37,7 +38,8 @@ const createUser = async (req, res = response) => {
     res.json({
         userID: userID,
         isAdmin: 0,
-        patientID: patientID
+        patientID: patientID,
+        name: name
     });
 };
 

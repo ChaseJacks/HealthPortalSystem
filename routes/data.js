@@ -22,7 +22,7 @@ const { validateInput } = require('../middleware/validateInput');
 
 const { viewAppointmentsPatient, viewAppointmentsDoctor } = require("../controllers/viewAppointments");
 router.get("/patient/:patientID/appointments", [
-    valiedateInput
+    validateInput
 ], viewAppointmentsPatient);
 
 router.get("/doctor/:doctorID/appointments", [
@@ -33,14 +33,14 @@ router.get("/doctor/:doctorID/appointments", [
 
 const { viewDoctors } = require('../controllers/viewDoctors');
 router.get("/viewDoctors", [
-    valiedateInput
+    validateInput
 ], viewDoctors);
 
 // viewAssessmentForm
 
 const { viewAssessmentForm } = require('../controllers/viewAssessmentForm');
 router.get("/patient/:patientID/assessmentForm", [
-    valiedateInput
+    validateInput
 ], viewAssessmentForm);
 
 // Export

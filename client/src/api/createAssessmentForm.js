@@ -1,15 +1,17 @@
+
 /**
  * 
- * client/src/api/viewAppointments.js - The HTTP request that is needed to access viewAppointmnets endpoint
+ * client/src/api/createAssessmentForm - Contains the HTTP request to create an assessment form for a patient
  * 
  * @author Richard Williams
+ * 
  */
 
-export async function viewAppointments(patientID) {
-    return await fetch("/viewAppointments", {
+export async function createAssessmentForm(patientID, patientName, patientResponse) {
+    return await fetch("/create/assessmentForm", {
         method: "POST",
-        body: JSON.stringify({ patientID }),
-        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ patientID, patientName, patientResponse }),
+        headers: { "Content-Type": "application/json" }
     })
         .then((response) => {
             // If request is not successful, display error message
