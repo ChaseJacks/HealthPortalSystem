@@ -91,9 +91,7 @@ function AppAppBar({ mode, toggleColorMode }) {
             >
               
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <MenuItem
-                  onClick={() => scrollToSection('features')}
-                  sx={{ py: '6px', px: '12px' }}
+                <MenuItem component={Link} to="/PatientAssessmentForm" sx={{ py: '6px', px: '12px' }}
                 >
                   <Typography variant="body2" color="text.primary">
                     Patient Assessment Form
@@ -120,7 +118,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                     View Appointments
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
+                <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Logout
                   </Typography>

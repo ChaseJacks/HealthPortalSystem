@@ -24,6 +24,7 @@ export default function DoctorView() {
   const LPtheme = createTheme(getLPTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
 
+  //THESE ALWAYS NEED TO BE HERE (raf)
   const toggleColorMode = () => {
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
