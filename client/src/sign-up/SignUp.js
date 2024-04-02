@@ -15,6 +15,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { createUser } from '../api/createUser';
 
+//Author @Chase Jackson
+//This is an sign up page that creates a valid patient in the DB if it doesn't already exist
+
 const defaultTheme = createTheme();
 
 export default function SignUp() {

@@ -10,6 +10,8 @@ import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/system';
 import { viewDoctors } from '../../api/viewDoctors'; // Import your API function
 
+//Author @ Chase Jackson
+//This is a component that pulls all the doctors on the portal system
 
   const fetchDoctorData = async () => {
     try {

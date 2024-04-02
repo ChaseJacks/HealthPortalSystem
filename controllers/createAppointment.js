@@ -17,7 +17,8 @@ const createAppointment = async (req, res = response) => {
     // Try to make the query. If there's an issue, respond with a bad request
     try {
         await query(`INSERT INTO APPOINTMENT (AppointmentID, PatientID, DoctorID, Date, Location) VALUES
-            (NEWID(), ${patientID}, ${doctorID}, ${date}, "${location}"`);
+        (NEWID(), CONVERT(uniqueidentifier, '${patientID}'), CONVERT(uniqueidentifier, '${doctorID}'), '${date}', '${location}')`);
+
     } catch (err) {
         res.status(401).json({
             msg: "Bad query!"

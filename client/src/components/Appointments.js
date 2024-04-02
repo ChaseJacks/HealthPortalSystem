@@ -13,6 +13,9 @@ import getLPTheme from '../landing-page/getLPTheme';
 
 import { viewAppointments } from './../api/viewPatientAppointments';
 
+
+//Author @Chase Jackson 
+//This is a simple appointments page that pulls the users appointments
 const Appointments = () => {
   const [mode, setMode] = useState('dark');
   const [showCustomTheme, setShowCustomTheme] = useState(true);

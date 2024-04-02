@@ -100,9 +100,9 @@ function DocAppBar({ mode, toggleColorMode }) {
                     Manage Appointments
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/UpdateProfile" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem component={Link} to="/" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    Update Profile
+                    Logout
                   </Typography>
                 </MenuItem>
                 
@@ -149,46 +149,17 @@ function DocAppBar({ mode, toggleColorMode }) {
                   {/* Update the onClick handlers to navigate to different routes
                   Here is something I havent touched but yet it works so no touchy.
                   */}
-                  <MenuItem component={Link} to="/features">
-                    Features
+                  <MenuItem component={Link} to="/ViewPatientAssessments">
+                    Patient Assessments
                   </MenuItem>
-                  <MenuItem component={Link} to="/testimonials">
-                    Testimonials
+                  <MenuItem component={Link} to="/ManageAppointments">
+                    View Appointments
                   </MenuItem>
-                  <MenuItem component={Link} to="/highlights">
-                    Highlights
-                  </MenuItem>
-                  <MenuItem component={Link} to="/pricing">
-                    Pricing
-                  </MenuItem>
-                  <MenuItem component={Link} to="/faq">
-                    FAQ
+                  <MenuItem component={Link} to="/">
+                    Logout
                   </MenuItem>
                   <Divider />
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-up/"
-                      target="_blank"
-                      sx={{ width: '100%' }}
-                    >
-                      Sign up
-                    </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-in/"
-                      target="_blank"
-                      sx={{ width: '100%' }}
-                    >
-                      Sign in
-                    </Button>
-                  </MenuItem>
+                  
                 </Box>
               </Drawer>
             </Box>

@@ -41,24 +41,27 @@ const viewAppointmentsPatient = async (req, res = response) => {
 
 const viewAppointmentsDoctor = async (req, res = response) => {
     try {
+
         const doctorID = req.params["doctorID"];
-        const request = new sql.Request();
-        request.input("doctorID", sql.NVarChar, doctorID);
-        const result = await request.query("SELECT * FROM Appointment WHERE DoctorID = @doctorID");
+        const result = await query(`SELECT * FROM Appointment WHERE DoctorID = (CONVERT(uniqueidentifier, '${doctorID}'))`);
 
         const finalResp = [];
 
         for (let i = 0; i < result.recordset.length; i++) {
             const patientID = result.recordset[i].PatientID;
-            const patientRequest = new sql.Request();
+            const patientResult = await query(`SELECT * FROM Patient WHERE PatientID = (CONVERT(uniqueidentifier, '${patientID}'))`);
+            const patientName = patientResult.recordset[i].Name;
 
-            patientRequest.input('patientID', sql.NVarChar, patientID);
-            const patientQuery = await docRequest.query("SELECT Name FROM Patient WHERE PatientID = @patientID");
-            const patientName = patientQuery.recordset[0].Name;
-
-            finalResp[i] = { PatientID: patientID, PatientName: patientName, Location: result.recordset[i].Location, Date: result.recordset[i].Date };
+            finalResp[i] = {
+                PatientID: patientID,
+                PatientName: patientName,
+                Location: result.recordset[i].Location,
+                Date: result.recordset[i].Date
+            };
+            
         }
-
+        
+        
         res.json(finalResp);
 
     } catch (err) {

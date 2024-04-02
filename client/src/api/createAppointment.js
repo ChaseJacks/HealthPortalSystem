@@ -1,15 +1,15 @@
-
 /**
  * 
- * client/src/api/viewDoctorAppointments - Contains the HTTP request to view all of a doctors appointments
+ * client/src/api/createAppointment - Contains the HTTP request to create a given appointment
  * 
  * @author Richard Williams
  * 
  */
 
-export async function viewDoctorAppointments(doctorID) {
-    return await fetch(`/data/doctor/${doctorID}/appointments`, {
-        method: "GET",
+export async function createAppointment(patientID, doctorID, date, location) {
+    return await fetch("/create/appointment", {
+        method: "POST",
+        body: JSON.stringify({ patientID: patientID, doctorID: doctorID, date: date, location: location }),
         headers: { "Content-Type": "application/json" }
     })
         .then((response) => {

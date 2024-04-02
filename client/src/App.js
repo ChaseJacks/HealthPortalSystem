@@ -10,8 +10,10 @@ import ScheduleAppointmentPage from './landing-page/components/ScheduleAppointme
 import Appointments from './components/Appointments.js';
 import DoctorLand from './DoctorLand/DoctorLand.js';
 import PatientAssessmentView from './PatientAssessmentView/PatientAssessmentView.js';
+import ManageAppointments from './DoctorLand/ManageAppointments.js';
 
-
+//Author @ Chase jackson 
+//This is where all the routes are determined
 
 function App() {
   
@@ -47,6 +49,7 @@ function App() {
         <Route path = "/ScheduleAppointment" element = {<ScheduleAppointmentPage />} />
         <Route path="/DoctorLand" element={<DoctorLand />} />
         <Route path = "/ViewPatientAssessments" element={ <PatientAssessmentView /> } />
+        <Route path="/ManageAppointments" element={<ManageAppointments />} />
 
       </Routes>
     </BrowserRouter>

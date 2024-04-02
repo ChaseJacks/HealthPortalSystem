@@ -15,6 +15,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { login } from "../api/auth.js";
 
+//Author @Chase Jackson
+//This is a simple sing in page that checks user info and checks if it is a valid user and pass
+
 const defaultTheme = createTheme();
 
 export default function SignIn() {

@@ -127,46 +127,22 @@ function ScheduleAppBar({ mode, toggleColorMode }) {
                     <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                   </Box>
                   {/* Update the onClick handlers to navigate to different routes */}
-                  <MenuItem component={Link} to="/features">
-                    Features
+                  <MenuItem component={Link} to="/landing">
+                    Home
                   </MenuItem>
-                  <MenuItem component={Link} to="/testimonials">
-                    Testimonials
+                  <MenuItem component={Link} to="/landing">
+                    Doctors
                   </MenuItem>
-                  <MenuItem component={Link} to="/highlights">
-                    Highlights
+                  <MenuItem component={Link} to="/PatientAssessmentForm">
+                    Patient Assessment Form
                   </MenuItem>
-                  <MenuItem component={Link} to="/pricing">
-                    Pricing
+                  <MenuItem component={Link} to="/Appointments">
+                    Appointments
                   </MenuItem>
-                  <MenuItem component={Link} to="/faq">
-                    FAQ
+                  <MenuItem component={Link} to="/">
+                    Logout
                   </MenuItem>
                   <Divider />
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-up/"
-                      target="_blank"
-                      sx={{ width: '100%' }}
-                    >
-                      Sign up
-                    </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-in/"
-                      target="_blank"
-                      sx={{ width: '100%' }}
-                    >
-                      Sign in
-                    </Button>
-                  </MenuItem>
                 </Box>
               </Drawer>
             </Box>

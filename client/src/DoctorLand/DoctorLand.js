@@ -41,8 +41,7 @@ export default function DoctorView() {
       <Box sx={{ bgcolor: 'background.default' }}>
       <Features />
       <Divider />
-      <PatientList />
-      <Highlights />
+      
       </Box>
       
     </ThemeProvider>

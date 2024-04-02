@@ -46,10 +46,15 @@ function SurveyComponent() {
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
     <CssBaseline />
-    <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div style={{ width: '80%' }}>
-        <PAFormBar mode={mode} toggleColorMode={toggleColorMode} />
-        <Survey.Survey model={survey} />
+    {/* It's important to have the positions be relative; they might not all need to be relative, but that's how it's working*/ }
+    <div style={{ position: 'relative', zIndex: '1' }}> {/* Ensure AppBar is in its own stacking context (via the zIndex) */}
+      <PAFormBar mode={mode} toggleColorMode={toggleColorMode} />
+      <div style={{ position: 'relative', zIndex: '0', width: '80vw', height: '100vh', 
+                        display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ width: '80vw', height: '100vh' }}>{/*It's important that this div is equal to the div above*/}
+     {/* Your expanding component goes here*/}
+      <Survey.Survey model={survey} />
+      </div>
       </div>
     </div>
     </ThemeProvider>

@@ -25,7 +25,13 @@ class HomePage extends React.Component {
             }
         }
         // ---------------------------------------
+/*
 
+@author Chase Jackson
+Simple homepage
+
+
+*/
     return (
       <div className='background-container'>
       <div className='wrapper' >
