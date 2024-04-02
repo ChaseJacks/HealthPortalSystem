@@ -36,6 +36,12 @@ router.get("/viewDoctors", [
     validateInput
 ], viewDoctors);
 
+//View Patients that a doctor has 
+const { viewPatients } = require('../controllers/viewPatients');
+router.get("/doctor/:doctorID/viewPatients", [
+    validateInput
+], viewPatients);
+
 // viewAssessmentForm
 
 const { viewAssessmentForm } = require('../controllers/viewAssessmentForm');

@@ -1,49 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Avatar from '@mui/material/Avatar';
 import { useTheme } from '@mui/system';
+import { viewPatients } from '../api/viewPatients';
+import moment from 'moment';
 
-
-
-// Assuming you have an endpoint to fetch PATIENT data
-const fetchPatientData = async () => {
-  try {
-    // Fetch PATIENT data from your Azure database
-    const response = await fetch('your_endpoint_here');
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
-//THIS SECTION NEEDS TO BE RENAMED TO RETRIEVE PATIENT DATA
-export default function Doctors() {
+const Patients = () => {
   const theme = useTheme();
-  
-  const [doctors, setDoctors] = useState([]);
+  const [patients, setPatients] = useState([]);
 
   useEffect(() => {
-    // Fetch doctor data when component mounts
     const fetchData = async () => {
-      const data = await fetchPatientData();
-      setDoctors(data);
-    };
+      try {
+          const data = await fetchPatientData();
+          setPatients(data);
+      } catch (error) {
+          console.error('Error fetching patient data:', error);
+      }
+  };
+  
     fetchData();
   }, []);
 
+  const fetchPatientData = async () => {
+    try {
+      const patientList = await viewPatients(localStorage.getItem("userTypeID"));
+      console.log('Fetched patient data:', patientList);
+      return patientList;
+    } catch (error) {
+      console.error('Error fetching patient data:', error);
+      return [];
+    }
+  };
+  
+  
+
   return (
     <Container
-      id="doctors"
+      id="patients"
       sx={{
         pt: { xs: 4, sm: 12 },
         pb: { xs: 8, sm: 16 },
@@ -68,41 +67,45 @@ export default function Doctors() {
         </Typography>
       </Box>
       <Grid container spacing={2}>
-        {doctors.map((doctor, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex' }}>
-            <Card
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                flexGrow: 1,
-                p: 1,
-              }}
-            >
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  {doctor.specialization}
-                </Typography>
-              </CardContent>
-              <Box
+        {patients.length === 0 ? (
+          <Typography variant="body1" color="text.secondary">
+            Loading...
+          </Typography>
+        ) : (
+          patients.map((patient, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex' }}>
+              <Card
                 sx={{
                   display: 'flex',
-                  flexDirection: 'row',
+                  flexDirection: 'column',
                   justifyContent: 'space-between',
-                  pr: 2,
+                  flexGrow: 1,
+                  p: 1,
                 }}
               >
-                <CardHeader
-                  avatar={<Avatar>{doctor.initials}</Avatar>}
-                  title={`${doctor.firstName} ${doctor.lastName}`}
-                  subheader={doctor.occupation}
-                />
-                
-              </Box>
-            </Card>
-          </Grid>
-        ))}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    pr: 2,
+                  }}
+                >
+                  <CardHeader
+                    avatar={<Avatar>{patient.PatientName.charAt(0)}</Avatar>}
+                    title={`${patient.PatientName}`}
+                    subheader={`Date: ${moment(patient.Date).format("MMMM Do YYYY, h:mm a")}`} // Format date using moment.js
+                  />
+                  <Typography variant="body2" color="text.secondary">{`Location: ${patient.Location}`}</Typography>
+                </Box>
+              </Card>
+            </Grid>
+          ))
+        )}
       </Grid>
     </Container>
   );
+  
 }
+
+export default Patients;

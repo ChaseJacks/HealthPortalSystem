@@ -82,12 +82,9 @@ function DocAppBar({ mode, toggleColorMode }) {
                 {/* Update the onClick handlers to navigate to different routes
                 Here is where you will add more buttons on the app bar like so, routes are not yet made but will be eventually.
                 */}
-                <MenuItem
-                  onClick={() => scrollToSection('patients')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
+                <MenuItem component={Link} to="/DoctorLand" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    View Patients
+                    View Patients 
                   </Typography>
                 </MenuItem>
                 <MenuItem component={Link} to="/ViewPatientAssessments" sx={{ py: '6px', px: '12px' }}>
