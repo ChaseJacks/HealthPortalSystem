@@ -19,8 +19,10 @@ export async function viewAssessmentForm(patientID) {
         // response.json() : {PatientID: ..., PatientName: ..., PatientResponse: "..."};
 
         const result = response.json();
+        console.log("Result " + result);
         const finalResp = { PatientID: result.PatientID, PatientName: result.patientName, PatientResponse: JSON.parse(result.PatientResponse) };
 
+        console.log(finalResp);
         return finalResp;
     })
     .catch((err) => {

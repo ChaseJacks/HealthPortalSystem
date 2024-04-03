@@ -7,7 +7,7 @@ const viewPatients = async (req, res = response) => {
         
         // Query to select appointments for the current doctor
         const result = await query(`
-            SELECT A.Date, A.Location, P.Name AS PatientName
+            SELECT A.PatientID, A.Date, A.Location, P.Name AS PatientName
             FROM Appointment A
             JOIN Patient P ON A.PatientID = P.PatientID
             WHERE A.DoctorID = (CONVERT(uniqueidentifier, '${doctorID}'))
@@ -17,7 +17,8 @@ const viewPatients = async (req, res = response) => {
         const formattedResult = result.recordset.map(appointment => ({
             Date: appointment.Date,
             Location: appointment.Location,
-            PatientName: appointment.PatientName
+            PatientName: appointment.PatientName,
+            PatientID: appointment.PatientID
         }));
         
         res.json(formattedResult);
