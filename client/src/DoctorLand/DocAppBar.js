@@ -84,12 +84,12 @@ function DocAppBar({ mode, toggleColorMode }) {
                 */}
                 <MenuItem component={Link} to="/DoctorLand" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    View Patients 
+                    Home 
                   </Typography>
                 </MenuItem>
                 <MenuItem component={Link} to="/ViewPatientAssessments" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    Patient Assessments 
+                    Patient & Assessments 
                   </Typography>
                 </MenuItem>
                 <MenuItem component={Link} to="/ManageAppointments" sx={{ py: '6px', px: '12px' }}>

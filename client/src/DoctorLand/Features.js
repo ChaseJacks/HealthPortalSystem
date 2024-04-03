@@ -9,17 +9,10 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 const items = [
-  {
-    title: 'View Patients',
+    {
+    title: 'Patients & Assessments',
     description:
-      'See your patients\' personal information (DOB, address, contact information, etc.)',
-    imageLight: 'url("/static/images/medical-history-light.png")',
-    imageDark: 'url("/static/images/medical-history-dark.png")',
-  },
-  {
-    title: 'View Patient Assessments',
-    description:
-      'See your patients\' medical information (height, weight, blood pressure, etc.)',
+      'See your patients\' information (DOB, height, weight, blood pressure, etc.)',
     imageLight: 'url("/static/images/symptom-assessment-light.png")',
     imageDark: 'url("/static/images/symptom-assessment-dark.png")',
   },
