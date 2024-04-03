@@ -7,6 +7,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import getLPTheme from '../landing-page/getLPTheme';
 import DocAppBar from '../DoctorLand/DocAppBar';
 import { viewPatients } from './../api/viewPatients'; // Assuming this function exists in your API file
+import { viewAssessmentForm } from '../api/viewAssessmentForm';
 
 export default function PatientAssessmentView() {
   const [mode, setMode] = React.useState('dark');
@@ -23,9 +24,7 @@ export default function PatientAssessmentView() {
     setShowCustomTheme((prev) => !prev);
   };
 
-  //A page where the doctor will see their patients assessment forms
-  //Author @Rafael and Chase
-
+  // Fetch patient data on component mount
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,6 +38,7 @@ export default function PatientAssessmentView() {
     fetchData();
   }, []);
 
+  // Function to fetch patient data from the API
   const fetchPatientData = async () => {
     try {
       const patientList = await viewPatients(localStorage.getItem("userTypeID"));
@@ -50,9 +50,17 @@ export default function PatientAssessmentView() {
     }
   };
 
-  const handlePatientClick = (patient) => {
-    // Handle patient click logic here, e.g., view assessment form
-    console.log("Clicked on patient:", patient);
+  // Function to handle clicking on patient's name
+  const handlePatientClick = async (PatientID) => {
+    // Perform a different function to display the patient's assessment form with the patientId
+    try{
+    console.log("Clicked on patient with ID:", PatientID);
+    const patientForm = await viewAssessmentForm(PatientID)
+    console.log(patientForm)
+    }catch (error){
+      console.error('Error fetchin Patients Assessment Form')
+    }
+    
   };
 
   return (
@@ -66,7 +74,7 @@ export default function PatientAssessmentView() {
             <Grid item key={index}>
               <Button
                 variant="outlined"
-                onClick={() => handlePatientClick(patient)}
+                onClick={() => handlePatientClick(patient.PatientID)} // Pass the patientId to handlePatientClick function
                 fullWidth
                 sx={{
                   bgcolor: showCustomTheme && mode === 'light' ? 'white' : 'transparent', // Set background color to white in light mode

@@ -14,7 +14,8 @@ const viewAssessmentForm = async (req, res = response) => {
 
     try {
         const patientID = req.params["patientID"];
-        const result = await query(`SELECT * FROM PatientAssessmentForm WHERE PatientID="${patientID}"`);
+        const result = await query(`SELECT * FROM PatientAssessmentForm WHERE PatientID=(CONVERT(uniqueidentifier, '${patientID}'))`);
+        //The query is good, it returns what we need to return
         res.json(result.recordset[0]);
     } catch (err) {
         console.log("Error - " + err.message);
