@@ -13,6 +13,8 @@ export default function PatientAssessmentView() {
   const [mode, setMode] = React.useState('dark');
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const [patients, setPatients] = React.useState([]);
+  const [patientFormDisplayed, setPatientFormDisplayed] = React.useState(false);
+  const [patientResponse, setPatientResponse] = React.useState(null);
   const LPtheme = createTheme(getLPTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
 
@@ -52,15 +54,50 @@ export default function PatientAssessmentView() {
 
   // Function to handle clicking on patient's name
   const handlePatientClick = async (PatientID) => {
-    // Perform a different function to display the patient's assessment form with the patientId
-    try{
-    console.log("Clicked on patient with ID:", PatientID);
-    const patientForm = await viewAssessmentForm(PatientID)
-    console.log(patientForm)
-    }catch (error){
-      console.error('Error fetchin Patients Assessment Form')
+    try {
+      console.log("Clicked on patient with ID:", PatientID);
+      const patientForm = await viewAssessmentForm(PatientID);
+      console.log(patientForm);
+
+      // Exclude the 'signature' field from the patient response
+      const patientResponse = patientForm.PatientResponse;
+      const filteredPatientResponse = {};
+      for (const key in patientResponse) {
+        if (key !== 'signature') {
+          filteredPatientResponse[key] = patientResponse[key];
+        }
+      }
+
+      // Display the patient's information only if it's not already displayed
+      if (!patientFormDisplayed) {
+        setPatientFormDisplayed(true);
+        setPatientResponse(filteredPatientResponse);
+      }
+    } catch (error) {
+      console.error('Error fetching Patients Assessment Form');
     }
-    
+  };
+
+  // Function to render patient response
+  const renderPatientResponse = () => {
+    if (!patientResponse) return null;
+
+    // Tidying up patient response
+    const tidiedResponse = Object.entries(patientResponse)
+      .filter(([key]) => key !== 'signature') // Exclude 'signature' key
+      .map(([key, value]) => (
+        <p key={key} style={{ color: 'black', margin: 0 }}>
+          {key}: {JSON.stringify(value).replace(/"|{|}/g, '')}
+          <br /> {/* Add a line break after each key-value pair */}
+        </p>
+      ));
+
+    return (
+      <Box mt={2} p={2} sx={{ bgcolor: 'grey.200' }}>
+        <h2 style={{ color: 'black' }}>Patient Response:</h2>
+        {tidiedResponse}
+      </Box>
+    );
   };
 
   return (
@@ -74,12 +111,12 @@ export default function PatientAssessmentView() {
             <Grid item key={index}>
               <Button
                 variant="outlined"
-                onClick={() => handlePatientClick(patient.PatientID)} // Pass the patientId to handlePatientClick function
+                onClick={() => handlePatientClick(patient.PatientID)}
                 fullWidth
                 sx={{
-                  bgcolor: showCustomTheme && mode === 'light' ? 'white' : 'transparent', // Set background color to white in light mode
+                  bgcolor: showCustomTheme && mode === 'light' ? 'white' : 'transparent',
                   '&:hover': {
-                    bgcolor: showCustomTheme && mode === 'light' ? '#f0f0f0' : 'transparent', // Light gray background color on hover in light mode
+                    bgcolor: showCustomTheme && mode === 'light' ? '#f0f0f0' : 'transparent',
                   },
                 }}
               >
@@ -88,6 +125,8 @@ export default function PatientAssessmentView() {
             </Grid>
           ))}
         </Grid>
+        {/* Render patient response if available */}
+        {renderPatientResponse()}
       </Box>
     </ThemeProvider>
   );
