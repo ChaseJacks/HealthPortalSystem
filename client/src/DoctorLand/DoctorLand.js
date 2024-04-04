@@ -1,3 +1,7 @@
+/**
+ * @author Rafael Alfonso
+ */
+
 import * as React from 'react';
 
 

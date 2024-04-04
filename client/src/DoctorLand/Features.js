@@ -24,9 +24,9 @@ const items = [
     imageDark: 'url("/static/images/vital-signs-dark.png")',
   },
   {
-    title: 'Update Profile',
+    title: 'Message Patient',
     description:
-      'Update your biography and personal information (DOB)',
+      'Communicate directly with one of your patients',
     imageLight: 'url("/static/images/vital-signs-light.png")',
     imageDark: 'url("/static/images/vital-signs-dark.png")',
   },
@@ -171,11 +171,11 @@ export default function Features() {
             >
             <Button
                 component={Link}
-                to=""
+                to="/ViewPatientAssessments"
                 variant="contained"
                 sx={{ color: 'white', width: 'auto' }}
               >
-                Update Profile Here
+                Patients & Assessments
               </Button>
             </Box>
           </Card>

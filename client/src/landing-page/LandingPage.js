@@ -89,10 +89,6 @@ export default function LandingPage() {
         <Highlights />
         <Divider />
         
-        <Divider />
-        
-        <Divider />
-        
       </Box>
       
     </ThemeProvider>

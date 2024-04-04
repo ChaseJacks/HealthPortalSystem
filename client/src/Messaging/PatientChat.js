@@ -6,6 +6,44 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import getLPTheme from '../landing-page/getLPTheme';
 import CssBaseline from '@mui/material/CssBaseline';
 import PatientChatAppBar from '../Menu Bars/PatientBars/PatientChatAppBar';
+import ListOfDoctorsForChat from './ListOfDoctorsForChat';
+import { List } from 'survey-react';
+
+function Sidebar({ people, onSelectPerson }) {
+  return (
+    <div style={{ width: '200px', borderRight: '1px solid #ccc', padding: '20px' }}>
+      <h2>People</h2>
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {people.map((person, index) => (
+          <li key={index} style={{ marginBottom: '10px', cursor: 'pointer' }} onClick={() => onSelectPerson(person)}>
+            {person.name}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function DisplayDoctors() {
+  const [selectedPerson, setSelectedPerson] = useState(null);
+  const people = [
+    { id: 1, name: 'John Doe' },
+    { id: 2, name: 'Jane Smith' },
+    { id: 3, name: 'Alice Johnson' },
+    // Add more people as needed
+  ];
+
+  const handleSelectPerson = (person) => {
+    setSelectedPerson(person);
+  };
+
+  return (
+    <div style={{ display: 'flex' }}>
+      <Sidebar people={people} onSelectPerson={handleSelectPerson} />
+      {selectedPerson && <PatientChat person={selectedPerson} />}
+    </div>
+  );
+}
 
 function PatientChat() {
   const [mode, setMode] = React.useState('dark');
@@ -67,6 +105,7 @@ function PatientChat() {
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
+      <ListOfDoctorsForChat />
       <PatientChatAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <div style={{ maxWidth: '500px', margin: 'auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
       <h2>Chat</h2>{/*Is there a way to make this the patient's name? GPT tried to have me make a prop for it outside this file*/}

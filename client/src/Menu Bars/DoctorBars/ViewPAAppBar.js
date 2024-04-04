@@ -21,6 +21,15 @@ function ViewPAAppBar({ mode, toggleColorMode }) {
     setOpen(newOpen);
   };
 
+  const logoutUser = () => {
+    localStorage.removeItem("userID");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("userTypeID");
+    localStorage.removeItem("name");
+
+    window.location.href = "/";
+}
+
   const scrollToSection = (sectionId) => {
     const sectionElement = document.getElementById(sectionId);
     const offset = 128;
@@ -97,7 +106,7 @@ function ViewPAAppBar({ mode, toggleColorMode }) {
                     Message Patient
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Logout
                   </Typography>
@@ -161,7 +170,7 @@ function ViewPAAppBar({ mode, toggleColorMode }) {
                     Message Patient
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Logout
                   </Typography>

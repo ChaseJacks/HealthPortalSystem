@@ -21,6 +21,15 @@ function DoctorChatAppBar({ mode, toggleColorMode }) {
     setOpen(newOpen);
   };
 
+  const logoutUser = () => {
+    localStorage.removeItem("userID");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("userTypeID");
+    localStorage.removeItem("name");
+
+    window.location.href = "/";
+}
+
   const scrollToSection = (sectionId) => {
     const sectionElement = document.getElementById(sectionId);
     const offset = 128;
@@ -89,7 +98,7 @@ function DoctorChatAppBar({ mode, toggleColorMode }) {
                 </MenuItem>
                 <MenuItem component={Link} to="/ViewPatientAssessments" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    Patient & Assessments 
+                    Patients & Assessments 
                   </Typography>
                 </MenuItem>
                 <MenuItem component={Link} to="/ManageAppointments" sx={{ py: '6px', px: '12px' }}>
@@ -97,7 +106,7 @@ function DoctorChatAppBar({ mode, toggleColorMode }) {
                     Manage Appointments
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Logout
                   </Typography>
@@ -153,7 +162,7 @@ function DoctorChatAppBar({ mode, toggleColorMode }) {
                 </MenuItem>
                 <MenuItem component={Link} to="/ViewPatientAssessments" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    Patient & Assessments 
+                    Patients & Assessments 
                   </Typography>
                 </MenuItem>
                 <MenuItem component={Link} to="/ManageAppointments" sx={{ py: '6px', px: '12px' }}>
@@ -161,7 +170,7 @@ function DoctorChatAppBar({ mode, toggleColorMode }) {
                     Manage Appointments
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Logout
                   </Typography>

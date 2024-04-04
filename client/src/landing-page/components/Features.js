@@ -10,26 +10,40 @@ import Typography from '@mui/material/Typography';
 
 const items = [
   {
-    title: 'Medical History',
+    title: 'Patient Assessment',
     description:
-      'Review and update patient medical history, including past illnesses, surgeries, allergies, and medications.',
+      'Fill out a patient assessment form',
     imageLight: 'url("/static/images/medical-history-light.png")',
     imageDark: 'url("/static/images/medical-history-dark.png")',
   },
   {
-    title: 'Symptom Assessment',
+    title: 'Doctors',
     description:
-      'Conduct symptom assessment to gather information about the patient’s current health status and concerns.',
+      'See available doctors',
     imageLight: 'url("/static/images/symptom-assessment-light.png")',
     imageDark: 'url("/static/images/symptom-assessment-dark.png")',
   },
   {
-    title: 'Vital Signs',
+    title: 'Schedule Appointment',
     description:
-      'Record vital signs such as blood pressure, heart rate, temperature, and respiratory rate.',
+      'Schedule an appointment with your preferred healthcare provider',
     imageLight: 'url("/static/images/vital-signs-light.png")',
     imageDark: 'url("/static/images/vital-signs-dark.png")',
   },
+  {
+    title: 'View Appointment',
+    description:
+      'See your upcoming appointments',
+    imageLight: 'url("/static/images/vital-signs-light.png")',
+    imageDark: 'url("/static/images/vital-signs-dark.png")',
+  },
+  {
+    title: 'Message Doctor',
+    description:
+      'Message your doctor directly',
+    imageLight: 'url("/static/images/vital-signs-light.png")',
+    imageDark: 'url("/static/images/vital-signs-dark.png")',
+  }
 ];
 
 export default function Features() {
