@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import * as Survey from 'survey-react';
 import 'survey-react/survey.css';
 import json from './PatientAssessmentForm.json';
-import PAFormBar from './PAFormBar';
+import PAFormBar from '../../Menu Bars/PatientBars/PAFormBar';
 import ToggleColorMode from '../../landing-page/components/ToggleColorMode';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import getLPTheme from '../../landing-page/getLPTheme';

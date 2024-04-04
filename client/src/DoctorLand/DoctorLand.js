@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import DocAppBar from '../DoctorLand/DocAppBar';
+import DocAppBar from '../Menu Bars/DoctorBars/DocAppBar';
 
 import Highlights from '../DoctorLand/Highlights';
 

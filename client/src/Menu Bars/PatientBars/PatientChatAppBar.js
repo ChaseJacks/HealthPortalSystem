@@ -12,11 +12,11 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
-import ToggleColorMode from './ToggleColorMode';
+import ToggleColorMode from '../../landing-page/components/ToggleColorMode';
 
 
 
-function AppAppBar({ mode, toggleColorMode }) {
+function PatientChatAppBar({ mode, toggleColorMode }) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -31,20 +31,6 @@ function AppAppBar({ mode, toggleColorMode }) {
 
         window.location.href = "/";
     }
-
-  const scrollToSection = (sectionId) => {
-    const sectionElement = document.getElementById(sectionId);
-    const offset = 128;
-    if (sectionElement) {
-      const targetScroll = sectionElement.offsetTop - offset;
-      sectionElement.scrollIntoView({ behavior: 'smooth' });
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth',
-      });
-      setOpen(false);
-    }
-  };
 
   return (
     <div>
@@ -104,16 +90,14 @@ function AppAppBar({ mode, toggleColorMode }) {
                   </Typography>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => scrollToSection('doctors')}
-                  sx={{ py: '6px', px: '12px' }}
+                 component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}
                 >
                   <Typography variant="body2" color="text.primary">
                     Doctors
                   </Typography>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => scrollToSection('highlights')}
-                  sx={{ py: '6px', px: '12px' }}
+                  component={Link} to="/ScheduleAppointment" sx={{ py: '6px', px: '12px' }}
                 >
                   <Typography variant="body2" color="text.primary">
                     Schedule Appointment
@@ -122,11 +106,6 @@ function AppAppBar({ mode, toggleColorMode }) {
                 <MenuItem component={Link} to="/Appointments" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     View Appointments
-                  </Typography>
-                </MenuItem>
-                <MenuItem component={Link} to="/MessageDoctor" sx={{ py: '6px', px: '12px' }}>
-                  <Typography variant="body2" color="text.primary">
-                    Message Doctor
                   </Typography>
                 </MenuItem>
                 <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
@@ -177,18 +156,43 @@ function AppAppBar({ mode, toggleColorMode }) {
                   >
                     <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                   </Box>
-                  <MenuItem component={Link} to="/landing">
+                  <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
                     Home
-                  </MenuItem>
-                  <MenuItem component={Link} to="/Appointments">
-                    View Appointments
-                  </MenuItem>
-                  <MenuItem component={Link} to="/PatientAssessmentForm">
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/PatientAssessmentForm" sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
                     Patient Assessment Form
-                  </MenuItem>
-                  <MenuItem component={Link} to="/">
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    Doctors
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  component={Link} to="/ScheduleAppointment"
+                  sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    Schedule Appointment
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/Appointments" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    View Appointments
+                  </Typography>
+                </MenuItem>
+                <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
                     Logout
-                  </MenuItem>
+                  </Typography>
+                </MenuItem>
                   <Divider />
                   
                 </Box>
@@ -201,9 +205,9 @@ function AppAppBar({ mode, toggleColorMode }) {
   );
 }
 
-AppAppBar.propTypes = {
+PatientChatAppBar.propTypes = {
   mode: PropTypes.oneOf(['dark', 'light']).isRequired,
   toggleColorMode: PropTypes.func.isRequired,
 };
 
-export default AppAppBar;
+export default PatientChatAppBar;

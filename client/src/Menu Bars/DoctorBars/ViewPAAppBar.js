@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
@@ -14,10 +14,8 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from '../../landing-page/components/ToggleColorMode';
 
-
-
-function PAFormBar({ mode, toggleColorMode }) {
-  const [open, setOpen] = React.useState(false);
+function ViewPAAppBar({ mode, toggleColorMode }) {
+  const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -38,15 +36,14 @@ function PAFormBar({ mode, toggleColorMode }) {
   };
 
   return (
-    <div >
-    {/* It's important to keep the position relative because now it's working; could be changed later though if found not needed*/}
+    <div>
       <AppBar
-        position="relative" 
+        position="fixed"
         sx={{
           boxShadow: 0,
           bgcolor: 'transparent',
           backgroundImage: 'none',
-          mt: 0,
+          mt: 2,
         }}
       >
         <Container maxWidth="lg">
@@ -81,35 +78,31 @@ function PAFormBar({ mode, toggleColorMode }) {
                 px: 0,
               }}
             >
-              
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}>
+                {/* Update the onClick handlers to navigate to different routes
+                Here is where you will add more buttons on the app bar like so, routes are not yet made but will be eventually.
+                */}
+                <MenuItem component={Link} to="/DoctorLand" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    Home
+                    Home 
                   </Typography>
                 </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('doctors')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
+                <MenuItem component={Link} to="/ManageAppointments" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    Doctors
+                    Manage Appointments
                   </Typography>
                 </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('highlights')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
+                <MenuItem component={Link} to="/MessagePatient" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    Schedule Appointment
+                    Message Patient
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/Appointments" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem component={Link} to="/" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    View Appointments
+                    Logout
                   </Typography>
                 </MenuItem>
-               
+                
               </Box>
             </Box>
             <Box
@@ -120,8 +113,6 @@ function PAFormBar({ mode, toggleColorMode }) {
               }}
             >
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-              
-             
             </Box>
             <Box sx={{ display: { sm: '', md: 'none' } }}>
               <Button
@@ -152,18 +143,29 @@ function PAFormBar({ mode, toggleColorMode }) {
                   >
                     <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                   </Box>
-                  <MenuItem component={Link} to="/landing">
-                    Home
-                  </MenuItem>
-                  <MenuItem component={Link} to="/landing">
-                    Doctors
-                  </MenuItem>
-                  <MenuItem component={Link} to="/landing">
-                    Schedule Appointment
-                  </MenuItem>
-                  <MenuItem component={Link} to="/Appointments">
-                    Appointments
-                  </MenuItem>
+                  {/* Update the onClick handlers to navigate to different routes
+                  Here is something I havent touched but yet it works so no touchy.
+                  */}
+                  <MenuItem component={Link} to="/DoctorLand" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    Home 
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/ManageAppointments" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    Manage Appointments
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/MessagePatient" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    Message Patient
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    Logout
+                  </Typography>
+                </MenuItem>
                   <Divider />
                   
                 </Box>
@@ -176,9 +178,9 @@ function PAFormBar({ mode, toggleColorMode }) {
   );
 }
 
-PAFormBar.propTypes = {
+ViewPAAppBar.propTypes = {
   mode: PropTypes.oneOf(['dark', 'light']).isRequired,
   toggleColorMode: PropTypes.func.isRequired,
 };
 
-export default PAFormBar;
+export default ViewPAAppBar;

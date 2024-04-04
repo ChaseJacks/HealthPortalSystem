@@ -1,8 +1,11 @@
+//This is a copy of DoctorChat, modified slightly for a patient experience
+//Rafael Alfonso
+
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import getLPTheme from '../landing-page/getLPTheme';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppAppBar from '../landing-page/components/AppAppBar';
+import PatientChatAppBar from '../Menu Bars/PatientBars/PatientChatAppBar';
 
 function PatientChat() {
   const [mode, setMode] = React.useState('dark');
@@ -64,7 +67,7 @@ function PatientChat() {
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
-      <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
+      <PatientChatAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <div style={{ maxWidth: '500px', margin: 'auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
       <h2>Chat</h2>{/*Is there a way to make this the patient's name? GPT tried to have me make a prop for it outside this file*/}
       <div style={{ height: '300px', overflowY: 'auto', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }}>

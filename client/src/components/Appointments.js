@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import ScheduleAppBar from '../landing-page/components/ScheduleAppBar';
+import PatientApptAppBar from '../Menu Bars/PatientBars/PatientApptAppBar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import getLPTheme from '../landing-page/getLPTheme';
@@ -62,7 +62,7 @@ const Appointments = () => {
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
-      <ScheduleAppBar mode={mode} toggleColorMode={toggleColorMode} toggleCustomTheme={toggleCustomTheme} />
+      <PatientApptAppBar mode={mode} toggleColorMode={toggleColorMode} toggleCustomTheme={toggleCustomTheme} />
       <Container>
         <Box mt={4}>
           <Typography variant="h2" gutterBottom>

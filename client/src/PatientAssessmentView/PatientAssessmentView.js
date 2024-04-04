@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import getLPTheme from '../landing-page/getLPTheme';
-import DocAppBar from '../DoctorLand/DocAppBar';
+import ViewPAAppBar from '../Menu Bars/DoctorBars/ViewPAAppBar';
 import { viewPatients } from './../api/viewPatients'; // Assuming this function exists in your API file
 import { viewAssessmentForm } from '../api/viewAssessmentForm';
 
@@ -66,7 +66,7 @@ export default function PatientAssessmentView() {
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
-      <DocAppBar mode={mode} toggleColorMode={toggleColorMode} />
+      <ViewPAAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Box sx={{ bgcolor: 'background.default', py: 2 }}>
         <Grid container spacing={2} direction="column">
           {/* Render patient buttons */}

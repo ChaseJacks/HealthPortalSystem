@@ -5,7 +5,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import getLPTheme from '../getLPTheme';
-import ScheduleAppBar from './ScheduleAppBar';
+import ScheduleAppBar from '../../Menu Bars/PatientBars/ScheduleAppBar';
 import { viewDoctors } from '../../api/viewDoctors'; // Import your API function
 import { createAppointment } from '../../api/createAppointment';
 

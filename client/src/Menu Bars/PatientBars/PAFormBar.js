@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+//This is the form bar that appears when FILLING OUT 
+//the patient assessment
+//Rafael Alfonso
+
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
@@ -12,24 +16,49 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
-import ToggleColorMode from './ToggleColorMode';
+import ToggleColorMode from '../../landing-page/components/ToggleColorMode';
 
-function ScheduleAppBar({ mode, toggleColorMode }) {
-  const [open, setOpen] = useState(false);
+
+
+function PAFormBar({ mode, toggleColorMode }) {
+  const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+  const logoutUser = () => {
+    localStorage.removeItem("userID");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("userTypeID");
+    localStorage.removeItem("name");
+
+    window.location.href = "/";
+}
+
+  const scrollToSection = (sectionId) => {
+    const sectionElement = document.getElementById(sectionId);
+    const offset = 128;
+    if (sectionElement) {
+      const targetScroll = sectionElement.offsetTop - offset;
+      sectionElement.scrollIntoView({ behavior: 'smooth' });
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth',
+      });
+      setOpen(false);
+    }
+  };
 
   return (
-    <div>
+    <div >
+    {/* It's important to keep the position relative because now it's working; could be changed later though if found not needed*/}
       <AppBar
-        position="fixed"
+        position="relative" 
         sx={{
           boxShadow: 0,
           bgcolor: 'transparent',
           backgroundImage: 'none',
-          mt: 2,
+          mt: 0,
         }}
       >
         <Container maxWidth="lg">
@@ -64,16 +93,27 @@ function ScheduleAppBar({ mode, toggleColorMode }) {
                 px: 0,
               }}
             >
+              
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                {/* Update the onClick handlers to navigate to different routes */}
-                <MenuItem component={Link} to="/PatientAssessmentForm" sx={{ py: '6px', px: '12px' }}>
+              <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    Patient Assessment Form
+                    Home
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem
+                  component={Link} to= "/landing" 
+                  sx={{ py: '6px', px: '12px' }}
+                >
                   <Typography variant="body2" color="text.primary">
                     Doctors
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  component={Link} to="/ScheduleAppointment"
+                  sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    Schedule Appointment
                   </Typography>
                 </MenuItem>
                 <MenuItem component={Link} to="/Appointments" sx={{ py: '6px', px: '12px' }}>
@@ -81,11 +121,17 @@ function ScheduleAppBar({ mode, toggleColorMode }) {
                     View Appointments
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem component={Link} to="/MessageDoctor" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
-                    Home
+                    Message Doctor
                   </Typography>
                 </MenuItem>
+                <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    Logout
+                  </Typography>
+                </MenuItem>
+               
               </Box>
             </Box>
             <Box
@@ -96,6 +142,8 @@ function ScheduleAppBar({ mode, toggleColorMode }) {
               }}
             >
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+              
+             
             </Box>
             <Box sx={{ display: { sm: '', md: 'none' } }}>
               <Button
@@ -126,23 +174,44 @@ function ScheduleAppBar({ mode, toggleColorMode }) {
                   >
                     <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                   </Box>
-                  {/* Update the onClick handlers to navigate to different routes */}
-                  <MenuItem component={Link} to="/landing">
+                  <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
                     Home
-                  </MenuItem>
-                  <MenuItem component={Link} to="/landing">
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  component={Link} to="/landing"
+                  sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
                     Doctors
-                  </MenuItem>
-                  <MenuItem component={Link} to="/PatientAssessmentForm">
-                    Patient Assessment Form
-                  </MenuItem>
-                  <MenuItem component={Link} to="/Appointments">
-                    Appointments
-                  </MenuItem>
-                  <MenuItem component={Link} to="/">
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  component={Link} to="/ScheduleAppointment"
+                  sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    Schedule Appointment
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/Appointments" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    View Appointments
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/MessageDoctor" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    Message Doctor
+                  </Typography>
+                </MenuItem>
+                <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
                     Logout
-                  </MenuItem>
+                  </Typography>
+                </MenuItem>
                   <Divider />
+                  
                 </Box>
               </Drawer>
             </Box>
@@ -153,9 +222,9 @@ function ScheduleAppBar({ mode, toggleColorMode }) {
   );
 }
 
-ScheduleAppBar.propTypes = {
+PAFormBar.propTypes = {
   mode: PropTypes.oneOf(['dark', 'light']).isRequired,
   toggleColorMode: PropTypes.func.isRequired,
 };
 
-export default ScheduleAppBar;
+export default PAFormBar;

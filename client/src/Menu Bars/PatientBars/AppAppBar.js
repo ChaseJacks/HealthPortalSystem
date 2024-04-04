@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
@@ -12,14 +12,25 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
-import ToggleColorMode from '../landing-page/components/ToggleColorMode';
+import ToggleColorMode from '../../landing-page/components/ToggleColorMode';
 
-function DocAppBar({ mode, toggleColorMode }) {
-  const [open, setOpen] = useState(false);
+
+
+function AppAppBar({ mode, toggleColorMode }) {
+  const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
-  };
+    };
+
+    const logoutUser = () => {
+        localStorage.removeItem("userID");
+        localStorage.removeItem("isAdmin");
+        localStorage.removeItem("userTypeID");
+        localStorage.removeItem("name");
+
+        window.location.href = "/";
+    }
 
   const scrollToSection = (sectionId) => {
     const sectionElement = document.getElementById(sectionId);
@@ -78,36 +89,52 @@ function DocAppBar({ mode, toggleColorMode }) {
                 px: 0,
               }}
             >
+              
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                {/* Update the onClick handlers to navigate to different routes
-                Here is where you will add more buttons on the app bar like so, routes are not yet made but will be eventually.
-                */}
-                <MenuItem component={Link} to="/DoctorLand" sx={{ py: '6px', px: '12px' }}>
+              <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}
+                >
                   <Typography variant="body2" color="text.primary">
-                    Home 
+                    Home
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/ViewPatientAssessments" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem component={Link} to="/PatientAssessmentForm" sx={{ py: '6px', px: '12px' }}
+                >
                   <Typography variant="body2" color="text.primary">
-                    Patient & Assessments 
+                    Patient Assessment Form
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/ManageAppointments" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem
+                  onClick={() => scrollToSection('doctors')}
+                  sx={{ py: '6px', px: '12px' }}
+                >
                   <Typography variant="body2" color="text.primary">
-                    Manage Appointments
+                    Doctors
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/MessagePatient" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem
+                  onClick={() => scrollToSection('highlights')}
+                  sx={{ py: '6px', px: '12px' }}
+                >
                   <Typography variant="body2" color="text.primary">
-                    Message Patient
+                    Schedule Appointment
                   </Typography>
                 </MenuItem>
-                <MenuItem component={Link} to="/" sx={{ py: '6px', px: '12px' }}>
+                <MenuItem component={Link} to="/Appointments" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    View Appointments
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/MessageDoctor" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    Message Doctor
+                  </Typography>
+                </MenuItem>
+                <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Logout
                   </Typography>
                 </MenuItem>
-                
+               
               </Box>
             </Box>
             <Box
@@ -118,6 +145,8 @@ function DocAppBar({ mode, toggleColorMode }) {
               }}
             >
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+              
+             
             </Box>
             <Box sx={{ display: { sm: '', md: 'none' } }}>
               <Button
@@ -148,18 +177,49 @@ function DocAppBar({ mode, toggleColorMode }) {
                   >
                     <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                   </Box>
-                  {/* Update the onClick handlers to navigate to different routes
-                  Here is something I havent touched but yet it works so no touchy.
-                  */}
-                  <MenuItem component={Link} to="/ViewPatientAssessments">
-                    Patient Assessments
-                  </MenuItem>
-                  <MenuItem component={Link} to="/ManageAppointments">
+                  <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    Home
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/PatientAssessmentForm" sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    Patient Assessment Form
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => scrollToSection('doctors')}
+                  sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    Doctors
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => scrollToSection('highlights')}
+                  sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    Schedule Appointment
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/Appointments" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
                     View Appointments
-                  </MenuItem>
-                  <MenuItem component={Link} to="/">
+                  </Typography>
+                </MenuItem>
+                <MenuItem component={Link} to="/MessageDoctor" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    Message Doctor
+                  </Typography>
+                </MenuItem>
+                <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
                     Logout
-                  </MenuItem>
+                  </Typography>
+                </MenuItem>
                   <Divider />
                   
                 </Box>
@@ -172,9 +232,9 @@ function DocAppBar({ mode, toggleColorMode }) {
   );
 }
 
-DocAppBar.propTypes = {
+AppAppBar.propTypes = {
   mode: PropTypes.oneOf(['dark', 'light']).isRequired,
   toggleColorMode: PropTypes.func.isRequired,
 };
 
-export default DocAppBar;
+export default AppAppBar;
