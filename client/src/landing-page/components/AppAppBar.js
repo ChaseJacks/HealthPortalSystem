@@ -118,6 +118,11 @@ function AppAppBar({ mode, toggleColorMode }) {
                     View Appointments
                   </Typography>
                 </MenuItem>
+                <MenuItem component={Link} to="/MessageDoctor" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    Message Doctor
+                  </Typography>
+                </MenuItem>
                 <MenuItem anchor = "right" onClick={logoutUser} sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Logout

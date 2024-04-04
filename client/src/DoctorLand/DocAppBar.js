@@ -97,6 +97,11 @@ function DocAppBar({ mode, toggleColorMode }) {
                     Manage Appointments
                   </Typography>
                 </MenuItem>
+                <MenuItem component={Link} to="/MessagePatient" sx={{ py: '6px', px: '12px' }}>
+                  <Typography variant="body2" color="text.primary">
+                    Message Patient
+                  </Typography>
+                </MenuItem>
                 <MenuItem component={Link} to="/" sx={{ py: '6px', px: '12px' }}>
                   <Typography variant="body2" color="text.primary">
                     Logout

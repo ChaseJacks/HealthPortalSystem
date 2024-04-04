@@ -11,6 +11,8 @@ import Appointments from './components/Appointments.js';
 import DoctorLand from './DoctorLand/DoctorLand.js';
 import PatientAssessmentView from './PatientAssessmentView/PatientAssessmentView.js';
 import ManageAppointments from './DoctorLand/ManageAppointments.js';
+import DoctorChat from './Messaging/DoctorChat.js';
+import PatientChat from './Messaging/PatientChat.js';
 
 //Author @ Chase jackson 
 //This is where all the routes are determined
@@ -50,6 +52,8 @@ function App() {
         <Route path="/DoctorLand" element={<DoctorLand />} />
         <Route path = "/ViewPatientAssessments" element={ <PatientAssessmentView /> } />
         <Route path="/ManageAppointments" element={<ManageAppointments />} />
+        <Route path = "/MessagePatient" element = {<DoctorChat /> } />
+        <Route path = "/MessageDoctor" element = {<PatientChat /> } />
 
       </Routes>
     </BrowserRouter>
