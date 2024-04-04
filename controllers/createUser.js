@@ -9,9 +9,12 @@
 const { response } = require("express");
 const { query } = require("../db/dbService");
 
+const crypto = require("crypto");
+
 const createUser = async (req, res = response) => {
     const { firstName, lastName, email, password } = req.body;
     const name = firstName + " " + lastName
+    const hashedPass = crypto.createHash('md5').update(password).digest('hex');
 
     const existQuery = await query(`SELECT COUNT(*) AS count FROM Users WHERE Username='${email}'`);
     console.log(existQuery)
@@ -25,7 +28,7 @@ const createUser = async (req, res = response) => {
     }
 
     // Insert the new user
-    await query(`INSERT INTO Users VALUES (NEWID(), '${email}', '${password}',0)`);
+    await query(`INSERT INTO Users VALUES (NEWID(), '${email}', '${hashedPass}',0)`);
     const userIDQuery = await query(`SELECT UserID FROM Users WHERE Username = '${email}'`);
     console.log(userIDQuery)
     const userID = userIDQuery.recordset[0].UserID;

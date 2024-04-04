@@ -10,7 +10,7 @@ export async function viewAssessmentForm(patientID) {
         method: "GET",
         headers: { "Content-Type": "application/json" },
     })
-    .then((response) => {
+    .then(async (response) => {
         // If request is not successful, display error message
         
         //Here is where it is messing up, response is fine. Although its saying it is not
@@ -21,7 +21,7 @@ export async function viewAssessmentForm(patientID) {
 
         // response.json() : {PatientID: ..., PatientName: ..., PatientResponse: "..."};
 
-        const result = response.json();
+        const result = await response.json();
         const finalResp = { PatientID: result.PatientID, PatientName: result.patientName, PatientResponse: JSON.parse(result.PatientResponse) };
         console.log("here is final resp" + finalResp)
         return finalResp;

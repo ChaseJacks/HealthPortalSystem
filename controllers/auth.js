@@ -9,11 +9,14 @@
 const { response } = require("express");
 const { query } = require("../db/dbService");
 
+const crypto = require('crypto');
+
 const login = async (req, res = response) => {
     const { email, password } = req.body;
+    const hashedPass = crypto.createHash('md5').update(password).digest('hex');
 
     // Get whether or not it's ood credentials
-    let result = await query("SELECT * FROM Users WHERE Username='" + email + "' AND Password='" + password + "'");
+    let result = await query("SELECT * FROM Users WHERE Username='" + email + "' AND Password='" + hashedPass + "'");
 
     if (!result.recordset[0]) {
         return res.status(401).json({
