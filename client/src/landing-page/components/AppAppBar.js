@@ -91,6 +91,12 @@ function AppAppBar({ mode, toggleColorMode }) {
             >
               
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <MenuItem component={Link} to="/landing" sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    Home
+                  </Typography>
+                </MenuItem>
                 <MenuItem component={Link} to="/PatientAssessmentForm" sx={{ py: '6px', px: '12px' }}
                 >
                   <Typography variant="body2" color="text.primary">
