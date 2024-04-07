@@ -8,12 +8,11 @@
  */
 
 // Dependences
-const { query } = require("../db/dbService");
-const express   = require('express');
-const cors      = require('cors');
-const fs        = require('fs');
-const path      = require('path');
-
+const { query }  = require("../db/dbService");
+const express    = require('express');
+const cors       = require('cors');
+const fs         = require('fs');
+const path       = require('path');
 // Class Declaration
 
 class Server {
@@ -28,16 +27,18 @@ class Server {
 
         this.middlewares();
         this.routes();
+        this.resourcesCheck();
     }
 
     middlewares() {
         this.app.use(cors()); // Enable CORS
-        this.app.use(express.json());
+        this.app.use(express.json({ extended: true }));
 
         // This is where we pick up the React app
         this.app.use(
             express.static(path.join(__dirname, "../client/build"))
         );
+
     }
 
     // Bind back-end routers to the app
@@ -52,6 +53,13 @@ class Server {
                 path.join(__dirname, "../client/build/index.html")
             );
         });
+    }
+
+    // Checks that a resources folder exists. If not, it will generate one
+    resourcesCheck() {
+        if (fs.existsSync("../resources")) {
+            fs.mkdirSync("../resources");
+        }
     }
 
     listen() {

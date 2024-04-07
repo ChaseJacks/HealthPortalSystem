@@ -40,9 +40,9 @@ function DoctorChat() {
   const handleMessageSend = () => {
     if (inputText.trim() !== '' || attachment !== null) {
       const newMessage = {
-        text: inputText.trim(),
-        sender: 'user',
-        attachment: attachment
+          text: inputText.trim(),
+          sender: localStorage.getItem("name"),
+          attachment: attachment
       };
       setMessages([...messages, newMessage]);
       setInputText('');
@@ -82,7 +82,7 @@ function DoctorChat() {
         ))}
       </div>
       <div style={{ display: 'flex', marginBottom: '10px' }}>
-        <input type="file" onChange={handleAttachmentChange} style={{ marginRight: '10px' }} />
+        <input name="upload" type="file" onChange={handleAttachmentChange} style={{ marginRight: '10px' }} />
         <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} style={{ flex: '1', marginRight: '10px', padding: '5px' }} />
         <button onClick={handleMessageSend} style={{ padding: '5px 10px', cursor: 'pointer' }}>Send</button>
       </div>

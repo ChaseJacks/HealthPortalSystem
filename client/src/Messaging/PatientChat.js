@@ -121,12 +121,23 @@ function PatientChat() {
           </div>
         ))}
       </div>
+
       <div style={{ display: 'flex', marginBottom: '10px' }}>
-        <input type="file" onChange={handleAttachmentChange} style={{ marginRight: '10px' }} />
-        <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} style={{ flex: '1', marginRight: '10px', padding: '5px' }} />
-        <button onClick={handleMessageSend} style={{ padding: '5px 10px', cursor: 'pointer' }}>Send</button>
+                  <form action={`/create/msg/`}//${localStorage.getItem("userTypeID")}/${selectedDoctor.DoctorID}`}
+                      method="post"
+                      encType="multipart/form-data"
+                      target="hiddenFrame">
+
+                      <input name="attachment" type="file" onChange={handleAttachmentChange} style={{ marginRight: '10px' }} />
+                      <input name="msg" type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} style={{ flex: '1', marginRight: '10px', padding: '5px' }} />
+                      <input name="submit" type="submit" onClick={handleMessageSend} style={{ padding: '5px 10px', cursor: 'pointer' }} value="Send" />
+                  </form>
       </div>
-    </div>
+          </div>
+
+
+
+          <iframe name="hiddenFrame" width="0" height="0" border="0" style={{ display: "none" }}></iframe>
     </ThemeProvider>
   );
 }

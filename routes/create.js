@@ -19,6 +19,7 @@ const router = Router();
 
 const { validateInput } = require('../middleware/validateInput');
 const { check } = require('express-validator');
+const formidable = require('express-formidable');
 
 // --------- Routes
 
@@ -46,6 +47,12 @@ const { createAssessmentForm } = require("../controllers/createAssessmentForm");
 router.post("/assessmentForm", [
     validateInput
 ], createAssessmentForm);
+
+// createMessage
+const { createMessage } = require("../controllers/createMessage");
+router.post("/msg/", [
+    validateInput,formidable
+], createMessage);
 
 // Export
 
