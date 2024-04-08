@@ -84,10 +84,11 @@ function PatientChat() {
         attachment: attachment
       };
       setMessages([...messages, newMessage]);
-      setInputText('');
+      setInputText('');//because of this, the request doesn't show the text sent
       setAttachment(null);
       // You can add logic here to send the message and attachment to the server or perform any other action
     }
+    
   };
 
   const handleAttachmentChange = (e) => {
@@ -105,7 +106,8 @@ function PatientChat() {
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
-      <ListOfDoctorsForChat />
+      <ListOfDoctorsForChat />*/
+      {/*<DisplayDoctors />*/}
       <PatientChatAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <div style={{ maxWidth: '500px', margin: 'auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
       <h2>Chat</h2>{/*Is there a way to make this the patient's name? GPT tried to have me make a prop for it outside this file*/}
@@ -127,9 +129,13 @@ function PatientChat() {
                       method="post"
                       encType="multipart/form-data"
                       target="hiddenFrame">
+                      
 
                       <input name="attachment" type="file" onChange={handleAttachmentChange} style={{ marginRight: '10px' }} />
-                      <input name="msg" type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} style={{ flex: '1', marginRight: '10px', padding: '5px' }} />
+                      <input name="msg" value={inputText} type="text" onChange={(e) => setInputText(e.target.value)} style={{ flex: '1', marginRight: '10px', padding: '5px' }}/>
+                      {/*msg will always send to the request what is in the inputText field; it does not store. So even tho inputText is being reset
+                      after it's sent, since it gets reset at the end, the request receives ''
+                      However, you want message to be tracking what's being inputted. So it's value must be inputText. But it needs to send what was sent */}
                       <input name="submit" type="submit" onClick={handleMessageSend} style={{ padding: '5px 10px', cursor: 'pointer' }} value="Send" />
                   </form>
       </div>
