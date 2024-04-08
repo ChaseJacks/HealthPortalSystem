@@ -63,6 +63,7 @@ function PatientChat() {
   
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
+  const [sentText, setSentText] = useState('');
   const [attachment, setAttachment] = useState(null); 
 
   // Simulate receiving messages from a server
@@ -84,7 +85,8 @@ function PatientChat() {
         attachment: attachment
       };
       setMessages([...messages, newMessage]);
-      setInputText('');//because of this, the request doesn't show the text sent
+      setSentText( inputText );
+      setInputText('');
       setAttachment(null);
       // You can add logic here to send the message and attachment to the server or perform any other action
     }
@@ -133,6 +135,7 @@ function PatientChat() {
 
                       <input name="attachment" type="file" onChange={handleAttachmentChange} style={{ marginRight: '10px' }} />
                       <input name="msg" value={inputText} type="text" onChange={(e) => setInputText(e.target.value)} style={{ flex: '1', marginRight: '10px', padding: '5px' }}/>
+                      <input name="sent text" value = {sentText} type = "text" style ={ {display: "none" } }/>
                       {/*msg will always send to the request what is in the inputText field; it does not store. So even tho inputText is being reset
                       after it's sent, since it gets reset at the end, the request receives ''
                       However, you want message to be tracking what's being inputted. So it's value must be inputText. But it needs to send what was sent */}
