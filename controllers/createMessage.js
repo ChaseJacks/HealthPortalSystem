@@ -19,8 +19,8 @@ const createMessage = async (req, res = response) => {
         [fields, files] = await form.parse(req);
 
         let messageText = fields.msgText[0];
-        // const patientID = req.params["patientID"];
-        // const doctorID = req.params["doctorID"];
+        const patientID = /*req.params["patientID"];*/ "33333333-3333-3333-3333-333333333333";
+        const doctorID = /*req.params["doctorID"];*/ "a972c577-dfb0-064e-1189-0154c99310da";
         const attachment = files.attachment[0];
         const patientAuthor = req.headers.referer.includes('/MessageDoctor') ? 1 : 0;
         var filePath = "";
@@ -34,8 +34,9 @@ const createMessage = async (req, res = response) => {
 
         // Generate the msgID
         const idQuery = await query(`SELECT MAX(MessageID) AS MessageID FROM Message;`);
-        console.log(idQuery.recordset[0]);
+        //console.log(idQuery.recordset[0]);
         const msgID = idQuery.recordset[0].MessageID + 1;
+        
 
         // If there is no attachment, change the filePath for the INSERT query
         if (!attachment) {
@@ -44,25 +45,35 @@ const createMessage = async (req, res = response) => {
 
         // Otherwise, save the file in resources/:msgID/:fileName
         else {
-            filePath = `../resources/${msgID}/${attachment.originalFilename}`;
-            console.log(attachment);
+            // Create the directory
+            if (!fs.existsSync(`./resources`))
+                fs.mkdirSync(`./resources`);
 
-            // TODO this is where I need to actually save the attachment into
-            // /resources/:msgID/:originalFilename
+            fs.mkdirSync(`./resources/${msgID}/`);
+            filePath = `./resources/${msgID}/${attachment.originalFilename}`;
 
-            // The issue is that everything in `fs` takes in only a buffer, but
-            // attachment is type PersistentFile. I cannot figure out how to save a persistent file
-            // I tried using the `C:/.../AppData/tmp/fileName` to access it raw when it recieves it in memory,
-            // but it is no longer a path by the time I try using it.
-            // Everything I've seen online uses a renaming of the file, but it still requires a buffer!
+            const readStream = fs.createReadStream(attachment.filepath);
+            const writeStream = fs.createWriteStream(filePath);
 
-            filePath = `data/msg/${msgID}/${attachment.originalFileName}`;
+            readStream.pipe(writeStream);
+
+            writeStream.on('error', (err) => {
+                console.error('Error writing file:', err);
+            });
+
+            writeStream.on('finish', () => {
+                console.log('File has been successfully written to', filePath);
+            });
+
+            filePath = `/data/msg/${msgID}/${attachment.originalFilename}`;
         }
 
         // Do the INSERT query
-        /*await query(`INSERT INTO Message (MessageID, PatientID, DoctorID, MessageContents, Attachment, PatientAuthor)
-                     VALUES (${msgID}, '${patientID}', '${doctorID}', ${messageText}, ${filePath}, ${patientAuthor});
-                    `)*/
+        const result = await query(`INSERT INTO Message (MessageID, PatientID, DoctorID, MessageContents, Attachment, PatientAuthor)
+                     VALUES (${msgID}, '${patientID}', '${doctorID}', ${messageText}, '${filePath}', ${patientAuthor});
+                    `);
+
+        console.log(result);
         
     } catch (err) {
         console.log(err.message);

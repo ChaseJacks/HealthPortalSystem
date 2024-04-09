@@ -49,6 +49,19 @@ router.get("/patient/:patientID/assessmentForm", [
     validateInput
 ], viewAssessmentForm);
 
+// getMessages
+
+const { getMessages } = require('../controllers/getMessages');
+router.get("/msg/:patientID/:doctorID", [
+     validateInput
+], getMessages);
+
+// getAttachment
+
+const { getAttachment } = require('../controllers/getAttachment');
+router.get("/msg/:msgID/:fileName", [
+    validateInput
+], getAttachment);
 // Export
 
 module.exports = router;
