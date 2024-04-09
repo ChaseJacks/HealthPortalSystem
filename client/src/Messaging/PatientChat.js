@@ -127,7 +127,7 @@ function PatientChat() {
       </div>
 
       <div style={{ display: 'flex', marginBottom: '10px' }}>
-                  <form action={`/create/msg/`}//${localStorage.getItem("userTypeID")}/${selectedDoctor.DoctorID}`}
+                  <form action={`/create/msg`}//${localStorage.getItem("userTypeID")}/${selectedDoctor.DoctorID}`}
                       method="post"
                       encType="multipart/form-data"
                       target="hiddenFrame">
@@ -135,7 +135,7 @@ function PatientChat() {
 
                       <input name="attachment" type="file" onChange={handleAttachmentChange} style={{ marginRight: '10px' }} />
                       <input name="msg" value={inputText} type="text" onChange={(e) => setInputText(e.target.value)} style={{ flex: '1', marginRight: '10px', padding: '5px' }}/>
-                      <input name="sent text" value = {sentText} type = "text" style ={ {display: "none" } }/>
+                      <input name="msgText" value = {sentText} type = "text" style ={ {display: "none" } }/>
                       {/*msg will always send to the request what is in the inputText field; it does not store. So even tho inputText is being reset
                       after it's sent, since it gets reset at the end, the request receives ''
                       However, you want message to be tracking what's being inputted. So it's value must be inputText. But it needs to send what was sent */}
