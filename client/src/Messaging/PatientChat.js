@@ -6,44 +6,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import getLPTheme from '../landing-page/getLPTheme';
 import CssBaseline from '@mui/material/CssBaseline';
 import PatientChatAppBar from '../Menu Bars/PatientBars/PatientChatAppBar';
-import ListOfDoctorsForChat from './ListOfDoctorsForChat';
 import { List } from 'survey-react';
+import { viewDoctors } from '../api/viewDoctors';  // Import your API function
 
-function Sidebar({ people, onSelectPerson }) {
-  return (
-    <div style={{ width: '200px', borderRight: '1px solid #ccc', padding: '20px' }}>
-      <h2>People</h2>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {people.map((person, index) => (
-          <li key={index} style={{ marginBottom: '10px', cursor: 'pointer' }} onClick={() => onSelectPerson(person)}>
-            {person.name}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function DisplayDoctors() {
-  const [selectedPerson, setSelectedPerson] = useState(null);
-  const people = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Smith' },
-    { id: 3, name: 'Alice Johnson' },
-    // Add more people as needed
-  ];
-
-  const handleSelectPerson = (person) => {
-    setSelectedPerson(person);
-  };
-
-  return (
-    <div style={{ display: 'flex' }}>
-      <Sidebar people={people} onSelectPerson={handleSelectPerson} />
-      {selectedPerson && <PatientChat person={selectedPerson} />}
-    </div>
-  );
-}
 
 function PatientChat() {
   const [mode, setMode] = React.useState('dark');
@@ -51,6 +16,44 @@ function PatientChat() {
   const [patients, setPatients] = React.useState([]);
   const LPtheme = createTheme(getLPTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
+
+  const [selectedDoctor, setSelectedDoctor] = useState(null); // State to store selected doctor
+  const [doctors, setDoctors] = useState([]); // State to store doctors fetched from the database
+
+  const handleDoctorSelect = (doctor) => {
+    setSelectedDoctor(doctor);
+  };
+
+  const fetchDoctorData = async () => {
+    try {
+        const doctorResponse = await viewDoctors();
+        
+        if (!doctorResponse) {
+            console.log("Error getting doctor list from database");
+            return [];
+        }
+
+        const doctorList = doctorResponse.recordset;
+        return doctorList;
+
+    } catch (err) {
+        console.error(err);
+        return [];
+    }
+};
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchDoctorData(); // Assuming viewDoctors fetches doctors from the database
+        setDoctors(data);
+      } catch (error) {
+        console.error('Error fetching doctors:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
 
   const toggleColorMode = () => {
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
@@ -88,6 +91,7 @@ function PatientChat() {
       setSentText( inputText );
       setInputText('');
       setAttachment(null);
+      //handleAttachmentChange;
       // You can add logic here to send the message and attachment to the server or perform any other action
     }
     
@@ -105,14 +109,41 @@ function PatientChat() {
     }
   };
 
+  const handleRemoveAttachment = () => {
+    setAttachment(null);
+    //onChange(null); // Notify parent component that the attachment has been removed
+  };
+
+
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
-      <ListOfDoctorsForChat />*/
-      {/*<DisplayDoctors />*/}
+      <div style={{ position: 'relative', zIndex: '1' }}>
       <PatientChatAppBar mode={mode} toggleColorMode={toggleColorMode} />
+      </div>
+      <div >
+
+      <div style={{ position: 'relative', zIndex: '0', alignItems: 'center' }}>
+              <h2>Select Doctor:</h2>
+              {/* Display doctors based on selected location */}
+              {/* Replace this with your actual doctor selection logic */}
+              <ul>
+                {doctors.map(doctor => (
+                  <li key={doctor.id} onClick={() => handleDoctorSelect(doctor)}>
+                  <div>
+                    
+                    <h3>{doctor.Name}</h3>
+                    <p>{doctor.Specialization}</p>
+                  </div>
+                </li>
+                ))}
+              </ul>
+            </div>
+      { selectedDoctor && (
+   
       <div style={{ maxWidth: '500px', margin: 'auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
-      <h2>Chat</h2>{/*Is there a way to make this the patient's name? GPT tried to have me make a prop for it outside this file*/}
+      
+      <h2>Chat with {selectedDoctor.Name} </h2>{/*Is there a way to make this the patient's name? GPT tried to have me make a prop for it outside this file*/}
       <div style={{ height: '300px', overflowY: 'auto', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }}>
         {messages.map((message, index) => (
           <div key={index} style={{ marginBottom: '5px', textAlign: message.sender === 'user' ? 'right' : 'left' }}>
@@ -133,7 +164,18 @@ function PatientChat() {
                       target="hiddenFrame">
                       
 
-                      <input name="attachment" type="file" onChange={handleAttachmentChange} style={{ marginRight: '10px' }} />
+                      {/*</form>{<input name="attachment" type="file" onChange={handleAttachmentChange} style={{ marginRight: '10px' }} />
+                      <button onClick={handleRemoveAttachment}>Remove</button>*/}
+                      <div>
+      {attachment ? (
+        <div>
+          <span>{attachment.name}</span>
+          <button onClick={handleRemoveAttachment}>Remove</button>
+        </div>
+      ) : (
+        <input name="attachment" type="file" onChange={handleAttachmentChange} />
+      )}
+    </div>
                       <input name="msg" value={inputText} type="text" onChange={(e) => setInputText(e.target.value)} style={{ flex: '1', marginRight: '10px', padding: '5px' }}/>
                       <input name="msgText" value = {sentText} type = "text" style ={ {display: "none" } }/>
                       {/*msg will always send to the request what is in the inputText field; it does not store. So even tho inputText is being reset
@@ -141,12 +183,15 @@ function PatientChat() {
                       However, you want message to be tracking what's being inputted. So it's value must be inputText. But it needs to send what was sent */}
                       <input name="submit" type="submit" onClick={handleMessageSend} style={{ padding: '5px 10px', cursor: 'pointer' }} value="Send" />
                   </form>
+                  
       </div>
           </div>
+      )}
 
 
 
           <iframe name="hiddenFrame" width="0" height="0" border="0" style={{ display: "none" }}></iframe>
+</div>
     </ThemeProvider>
   );
 }
