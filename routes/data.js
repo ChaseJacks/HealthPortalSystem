@@ -59,7 +59,7 @@ router.get("/msg/:patientID/:doctorID", [
 // getAttachment
 
 const { getAttachment } = require('../controllers/getAttachment');
-router.get("/msg/:msgID/:fileName", [
+router.get("/attach/:msgID", [
     validateInput
 ], getAttachment);
 // Export

@@ -73,8 +73,8 @@ function PatientChat() {
   useEffect(() => {
     // Replace this with actual logic to receive messages from a server
     const interval = setInterval(() => {
-      const newMessage = { text: 'Hello!', sender: 'bot' };
-      setMessages(prevMessages => [...prevMessages, newMessage]);
+      //const newMessage = { text: 'Hello!', sender: 'bot' };
+      // setMessages(prevMessages => [...prevMessages, newMessage]);
     }, 3000); // Simulate receiving a message every 3 seconds
 
     return () => clearInterval(interval);
@@ -91,8 +91,6 @@ function PatientChat() {
       setSentText( inputText );
       setInputText('');
       setAttachment(null);
-      //handleAttachmentChange;
-      // You can add logic here to send the message and attachment to the server or perform any other action
     }
     
   };
@@ -158,7 +156,7 @@ function PatientChat() {
       </div>
 
       <div style={{ display: 'flex', marginBottom: '10px' }}>
-                  <form action={`/create/msg`}//${localStorage.getItem("userTypeID")}/${selectedDoctor.DoctorID}`}
+          <form action={`/create/msg/${localStorage.getItem("userTypeID")}/${selectedDoctor.DoctorID}`}
                       method="post"
                       encType="multipart/form-data"
                       target="hiddenFrame">
@@ -182,7 +180,7 @@ function PatientChat() {
                       after it's sent, since it gets reset at the end, the request receives ''
                       However, you want message to be tracking what's being inputted. So it's value must be inputText. But it needs to send what was sent */}
                       <input name="submit" type="submit" onClick={handleMessageSend} style={{ padding: '5px 10px', cursor: 'pointer' }} value="Send" />
-                  </form>
+           </form>
                   
       </div>
           </div>

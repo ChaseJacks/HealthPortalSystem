@@ -15,12 +15,12 @@ const createMessage = async (req, res = response) => {
 
     try {
         // Begin processing the form that's being sent
-        var form = new formidable.IncomingForm({allowEmptyFiles: true});
+        var form = new formidable.IncomingForm({allowEmptyFiles: true, minFileSize: 0});
         [fields, files] = await form.parse(req);
 
         let messageText = fields.msgText[0];
-        const patientID = /*req.params["patientID"];*/ "33333333-3333-3333-3333-333333333333";
-        const doctorID = /*req.params["doctorID"];*/ "a972c577-dfb0-064e-1189-0154c99310da";
+        const patientID = req.params["patientID"];
+        const doctorID = req.params["doctorID"];
         const attachment = files.attachment[0];
         const patientAuthor = req.headers.referer.includes('/MessageDoctor') ? 1 : 0;
         var filePath = "";
@@ -29,17 +29,18 @@ const createMessage = async (req, res = response) => {
         if (messageText == "") {
             messageText = "NULL";
         } else {
-            messageText = "'" + messageText + "'";
+            // Guarantee the messageText will maintain all types of quotes within a message
+            // This way, it won't mess with the query that follows
+            messageText = "'" + messageText.replaceAll("'", "|||") + "'";
         }
 
         // Generate the msgID
         const idQuery = await query(`SELECT MAX(MessageID) AS MessageID FROM Message;`);
-        //console.log(idQuery.recordset[0]);
         const msgID = idQuery.recordset[0].MessageID + 1;
         
 
         // If there is no attachment, change the filePath for the INSERT query
-        if (!attachment) {
+        if (attachment.size == 0) {
             filePath = "NULL";
         }
 
@@ -62,18 +63,16 @@ const createMessage = async (req, res = response) => {
             });
 
             writeStream.on('finish', () => {
-                console.log('File has been successfully written to', filePath);
+                //console.log('File has been successfully written to', filePath);
             });
 
-            filePath = `/data/msg/${msgID}/${attachment.originalFilename}`;
+            filePath = `'/data/attach/${msgID}/${attachment.originalFilename}'`;
         }
 
         // Do the INSERT query
         const result = await query(`INSERT INTO Message (MessageID, PatientID, DoctorID, MessageContents, Attachment, PatientAuthor)
-                     VALUES (${msgID}, '${patientID}', '${doctorID}', ${messageText}, '${filePath}', ${patientAuthor});
+                     VALUES (${msgID}, '${patientID}', '${doctorID}', ${messageText}, ${filePath}, ${patientAuthor});
                     `);
-
-        console.log(result);
         
     } catch (err) {
         console.log(err.message);

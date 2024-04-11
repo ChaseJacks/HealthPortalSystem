@@ -49,7 +49,7 @@ router.post("/assessmentForm", [
 
 // createMessage
 const { createMessage } = require("../controllers/createMessage");
-router.post("/msg", [
+router.post("/msg/:patientID/:doctorID", [
     validateInput
 ], createMessage);
 
