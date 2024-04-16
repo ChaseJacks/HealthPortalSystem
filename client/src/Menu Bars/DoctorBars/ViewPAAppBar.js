@@ -47,7 +47,7 @@ function ViewPAAppBar({ mode, toggleColorMode }) {
   return (
     <div>
       <AppBar
-        position="relative"
+        position="fixed"
         sx={{
           boxShadow: 0,
           bgcolor: 'transparent',
