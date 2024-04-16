@@ -14,8 +14,31 @@ function DoctorChat() {
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [patients, setPatients] = useState([]);
 
-  const handlePatientSelect = (patient) => {
-    setSelectedPatient(patient);
+  const handlePatientSelect = async (patient) => {
+      setSelectedPatient(patient);
+
+      try {
+          let myPatID = patient.PatientID;
+          let myDocID = localStorage.getItem("userTypeID");
+
+          const { msgArr } = await fetch(`/data/msg/${myPatID}/${myDocID}?num=${20}`);
+
+          let newMessages = [];
+
+          for (let i = 0; i < msgArr.length; i++) {
+              let sender = msgArr[i].PatientAuthor ? patient.Name : 'You';
+              let msg = {
+                  msgID: msgArr[i].MessageID,
+                  text: msgArr[i].MessageContents || "",
+                  sender: sender
+              };
+              newMessages[i] = msg;
+          }
+
+          setMessages(newMessages);
+      } catch (err) {
+          console.log("Error fetching messages - " + err.message);
+      }
   };
 
   useEffect(() => {
@@ -57,9 +80,38 @@ function DoctorChat() {
   const [attachment, setAttachment] = useState(null); 
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      // Replace this with actual logic to receive messages from a server
-    }, 3000); // Simulate receiving a message every 3 seconds
+      const interval = setInterval(async () => {
+          if (selectedPatient) {
+              let myPatID = selectedPatient.PatientID;
+              let myDocID = localStorage.getItem("userTypeID");
+              const { msgArr } = await fetch(`/data/msg/${myPatID}/${myDocID}?num=${10}`);
+
+              for (let i = 0; i < msgArr.length; i++) {
+                  // If it's from the patient,
+                  if (msgArr.PatientAuthor) {
+                      // Find out if the message is duplicated
+                      let isDuplicated = false;
+                      for (let j = 0; j < messages.length; j++) {
+                          if (messages[j].msgID == msgArr[i].MessageID) {
+                              isDuplicated = true;
+                              break;
+                          }
+                      }
+
+                      // If message isn't duplicated, add it to the list of messages
+                      if (!isDuplicated) {
+                          // Assemble the message and add
+                          let newMsg = {
+                              msgID: msgArr[i].MessageID,
+                              text: msgArr[i].MessageContents || "",
+                              sender: selectedPatient.Name
+                          };
+                          setMessages([...messages, newMsg]);
+                      }
+                  }
+              }
+          }
+      }, 3000); // Simulate receiving a message every 3 seconds
 
     return () => clearInterval(interval);
   }, []);

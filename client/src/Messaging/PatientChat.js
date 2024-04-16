@@ -20,8 +20,31 @@ function PatientChat() {
   const [selectedDoctor, setSelectedDoctor] = useState(null); // State to store selected doctor
   const [doctors, setDoctors] = useState([]); // State to store doctors fetched from the database
 
-  const handleDoctorSelect = (doctor) => {
-    setSelectedDoctor(doctor);
+  const handleDoctorSelect = async (doctor) => {
+      setSelectedDoctor(doctor);
+
+      try {
+          let myPatID = localStorage.getItem("userTypeID");
+          let myDocID = doctor.DoctorID;
+
+          const { msgArr } = await fetch(`/data/msg/${myPatID}/${myDocID}?num=${20}`);
+
+          let newMessages = [];
+
+          for (let i = 0; i < msgArr.length; i++) {
+              let sender = msgArr[i].PatientAuthor ? 'You' : doctor.Name;
+              let msg = {
+                  msgID: msgArr[i].MessageID,
+                  text: msgArr[i].MessageContents || "",
+                  sender: sender
+              };
+              newMessages[i] = msg;
+          }
+
+          setMessages(newMessages);
+      } catch (err) {
+          console.log("Error fetching messages - " + err.message);
+      }
   };
 
   const fetchDoctorData = async () => {
@@ -70,11 +93,39 @@ function PatientChat() {
   const [attachment, setAttachment] = useState(null); 
 
   // Simulate receiving messages from a server
-  useEffect(() => {
-    // Replace this with actual logic to receive messages from a server
-    const interval = setInterval(() => {
-      //const newMessage = { text: 'Hello!', sender: 'bot' };
-      // setMessages(prevMessages => [...prevMessages, newMessage]);
+    useEffect(() => {
+
+    const interval = setInterval( async () => {
+        if (selectedDoctor) {
+            let myPatID = localStorage.getItem("userTypeID");
+            let myDocID = selectedDoctor.DoctorID;
+            const { msgArr } = await fetch(`/data/msg/${myPatID}/${myDocID}?num=${10}`);
+
+            for (let i = 0; i < msgArr.length; i++) {
+                // If it's from the doctor,
+                if (!msgArr.PatientAuthor) {
+                    // Find out if the message is duplicated
+                    let isDuplicated = false;
+                    for (let j = 0; j < messages.length; j++) {
+                        if (messages[j].msgID == msgArr[i].MessageID) {
+                            isDuplicated = true;
+                            break;
+                        }
+                    }
+
+                    // If message isn't duplicated, add it to the list of messages
+                    if (!isDuplicated) {
+                        // Assemble the message and add
+                        let newMsg = {
+                            msgID: msgArr[i].MessageID,
+                            text: msgArr[i].MessageContents || "",
+                            sender: selectedDoctor.Name
+                        };
+                        setMessages([...messages, newMsg]);
+                    }
+                }
+            }
+        }
     }, 3000); // Simulate receiving a message every 3 seconds
 
     return () => clearInterval(interval);
@@ -127,7 +178,7 @@ function PatientChat() {
               {/* Replace this with your actual doctor selection logic */}
               <ul>
                 {doctors.map(doctor => (
-                  <li key={doctor.id} onClick={() => handleDoctorSelect(doctor)}>
+                  <li key={doctor.id} onClick={async () => await handleDoctorSelect(doctor)}>
                   <div>
                     
                     <h3>{doctor.Name}</h3>
@@ -145,7 +196,7 @@ function PatientChat() {
       <div style={{ height: '300px', overflowY: 'auto', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }}>
         {messages.map((message, index) => (
           <div key={index} style={{ marginBottom: '5px', textAlign: message.sender === 'user' ? 'right' : 'left' }}>
-            <strong>{message.sender === 'user' ? 'You' : 'Bot'}</strong>: {message.text}
+            <strong>{message.sender === 'user' ? 'You' : selectedDoctor.Name}</strong>: {message.text}
             {message.attachment && (
               <div style={{ marginTop: '5px', cursor: 'pointer', textDecoration: 'underline', color: 'blue' }} onClick={() => handleAttachmentClick(message)}>
                 Attachment: {message.attachment.name} ({(message.attachment.size / 1024).toFixed(2)} KB)
