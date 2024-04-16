@@ -47,7 +47,7 @@ function DoctorChatAppBar({ mode, toggleColorMode }) {
   return (
     <div>
       <AppBar
-        position="fixed"
+        position="relative"
         sx={{
           boxShadow: 0,
           bgcolor: 'transparent',

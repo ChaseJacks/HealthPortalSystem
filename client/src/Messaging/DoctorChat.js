@@ -66,8 +66,8 @@ const fetchPatientData = async () => {
   useEffect(() => {
     // Replace this with actual logic to receive messages from a server
     const interval = setInterval(() => {
-      const newMessage = { text: 'Hello!', sender: 'bot' };
-      setMessages(prevMessages => [...prevMessages, newMessage]);
+      //const newMessage = { text: 'Hello!', sender: 'bot' };
+      //setMessages(prevMessages => [...prevMessages, newMessage]);
     }, 3000); // Simulate receiving a message every 3 seconds
 
     return () => clearInterval(interval);
@@ -77,10 +77,11 @@ const fetchPatientData = async () => {
     if (inputText.trim() !== '' || attachment !== null) {
       const newMessage = {
           text: inputText.trim(),
-          sender: localStorage.getItem("name"),
+          sender: 'user',
           attachment: attachment
       };
       setMessages([...messages, newMessage]);
+      setSentText( inputText );
       setInputText('');
       setAttachment(null);
       // You can add logic here to send the message and attachment to the server or perform any other action
@@ -107,12 +108,12 @@ const fetchPatientData = async () => {
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
-      <div style={{ position: 'relative', zIndex: '1' }}>
+      <div style={{ position: 'relative', zIndex: '2' }}>
       <DoctorChatAppBar mode={mode} toggleColorMode={toggleColorMode} />
-      </div>
-      <div >
+      
+      {/*<div >*/}
 
-<div style={{ position: 'relative', zIndex: '0', alignItems: 'center' }}>
+<div style={{ position: 'relative', zIndex: '1', alignItems: 'center' }}>
         <h2>Select Patient:</h2>
         {/* Display doctors based on selected location */}
         {/* Replace this with your actual doctor selection logic */}
@@ -127,9 +128,10 @@ const fetchPatientData = async () => {
           ))}
         </ul>
       </div>
+      {/*</div>*/}
       { selectedPatient && (
    
-   <div style={{ maxWidth: '500px', margin: 'auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
+   <div style={{ position: 'relative' , zIndex: '0',  maxWidth: '500px', margin: 'auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
    
    <h2>Chat with {selectedPatient.PatientName} </h2>{/*Is there a way to make this the patient's name? GPT tried to have me make a prop for it outside this file*/}
    <div style={{ height: '300px', overflowY: 'auto', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }}>
@@ -145,8 +147,8 @@ const fetchPatientData = async () => {
      ))}
    </div>
 
-   <div style={{ display: 'flex', marginBottom: '10px' }}>
-               <form action={`/create/msg`}//${localStorage.getItem("userTypeID")}/${selectedDoctor.DoctorID}`}
+   <div style={{  position: 'relative' , zIndex: '0', display: 'flex', marginBottom: '10px' }}>
+               <form action={`/create/msg/${localStorage.getItem("userTypeID")}/${selectedPatient.PatientID}`}
                    method="post"
                    encType="multipart/form-data"
                    target="hiddenFrame">
